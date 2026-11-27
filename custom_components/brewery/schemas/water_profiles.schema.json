@@ -36,9 +36,24 @@
             "uniqueItems": true,
             "description": "Коды подходящих стилей из каталога BJCP указанной редакции. Существование кода проверяется по данным каталога. Пустой список означает, что конкретные стили не указаны."
           },
-          "ions_mg_per_l": {
-            "$ref": "ions.schema.json",
-            "description": "Цели в мг/л. Пропуск снимает цель, ноль задаёт нулевую цель."
+          "ions": {
+            "description": "Целевые концентрации ионов с общей единицей из записи справочника.",
+            "type": "object",
+            "properties": {
+              "unit": {
+                "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/ConcentrationUnitType",
+                "description": "Единица концентрации для всех значений этого профиля."
+              },
+              "values": {
+                "$ref": "ions.schema.json",
+                "description": "Цели по ионам. Пропуск означает незаданную цель. Явный ноль задаёт нулевую цель."
+              }
+            },
+            "required": [
+              "unit",
+              "values"
+            ],
+            "additionalProperties": false
           }
         },
         "required": [
@@ -46,7 +61,7 @@
           "title",
           "source_url",
           "bjpc_styles",
-          "ions_mg_per_l"
+          "ions"
         ],
         "additionalProperties": false
       }
