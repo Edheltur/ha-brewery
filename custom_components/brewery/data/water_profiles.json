@@ -1,0 +1,314 @@
+{
+  "bjcp_edition": 2021,
+  "profiles": [
+    {
+      "name": "balanced_amber",
+      "title": "Янтарное сбалансированное",
+      "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
+      "bjpc_styles": [],
+      "ions": {
+        "values": {
+          "calcium": 80,
+          "magnesium": 5,
+          "sodium": 25,
+          "chloride": 75,
+          "sulfate": 80,
+          "bicarbonate": 100
+        },
+        "unit": "mg/l"
+      }
+    },
+    {
+      "name": "balanced_amber_strong",
+      "title": "Янтарное сбалансированное, повышенная минерализация",
+      "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
+      "bjpc_styles": [],
+      "ions": {
+        "unit": "mg/l",
+        "values": {
+          "calcium": 150,
+          "magnesium": 10,
+          "sodium": 80,
+          "chloride": 150,
+          "sulfate": 160,
+          "bicarbonate": 220
+        }
+      }
+    },
+    {
+      "name": "pale_malty",
+      "title": "Светлое солодовое",
+      "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
+      "bjpc_styles": [],
+      "ions": {
+        "unit": "mg/l",
+        "values": {
+          "calcium": 60,
+          "magnesium": 5,
+          "sodium": 10,
+          "chloride": 95,
+          "sulfate": 55,
+          "bicarbonate": 0
+        }
+      }
+    },
+    {
+      "name": "pale_hoppy",
+      "title": "Светлое охмелённое",
+      "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
+      "bjpc_styles": [],
+      "ions": {
+        "unit": "mg/l",
+        "values": {
+          "calcium": 75,
+          "magnesium": 5,
+          "sodium": 10,
+          "chloride": 50,
+          "sulfate": 150,
+          "bicarbonate": 0
+        }
+      }
+    },
+    {
+      "name": "burton_historic",
+      "title": "Бертон-апон-Трент, исторический",
+      "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
+      "bjpc_styles": [],
+      "ions": {
+        "unit": "mg/l",
+        "values": {
+          "calcium": 270,
+          "magnesium": 41,
+          "sodium": 113,
+          "chloride": 85,
+          "sulfate": 720,
+          "bicarbonate": 270
+        }
+      }
+    },
+    {
+      "name": "burton_decarbonated",
+      "title": "Бертон-апон-Трент, декарбонизированный",
+      "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
+      "bjpc_styles": [],
+      "ions": {
+        "unit": "mg/l",
+        "values": {
+          "calcium": 187,
+          "magnesium": 41,
+          "sodium": 113,
+          "chloride": 85,
+          "sulfate": 720,
+          "bicarbonate": 20
+        }
+      }
+    },
+    {
+      "name": "dortmund_historic",
+      "title": "Дортмунд, исторический",
+      "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
+      "bjpc_styles": [
+        "5C"
+      ],
+      "ions": {
+        "unit": "mg/l",
+        "values": {
+          "calcium": 250,
+          "magnesium": 20,
+          "sodium": 10,
+          "chloride": 100,
+          "sulfate": 300,
+          "bicarbonate": 340
+        }
+      }
+    },
+    {
+      "name": "dortmund_decarbonated",
+      "title": "Дортмунд, декарбонизированный",
+      "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
+      "bjpc_styles": [
+        "5C"
+      ],
+      "ions": {
+        "unit": "mg/l",
+        "values": {
+          "calcium": 155,
+          "magnesium": 23,
+          "sodium": 10,
+          "chloride": 100,
+          "sulfate": 300,
+          "bicarbonate": 53
+        }
+      }
+    },
+    {
+      "name": "dublin",
+      "title": "Дублин, сухой стаут",
+      "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
+      "bjpc_styles": [
+        "15B"
+      ],
+      "ions": {
+        "unit": "mg/l",
+        "values": {
+          "calcium": 110,
+          "magnesium": 4,
+          "sodium": 12,
+          "chloride": 19,
+          "sulfate": 53,
+          "bicarbonate": 280
+        }
+      }
+    },
+    {
+      "name": "edinburgh",
+      "title": "Эдинбург, шотландский эль",
+      "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
+      "bjpc_styles": [],
+      "ions": {
+        "unit": "mg/l",
+        "values": {
+          "calcium": 100,
+          "magnesium": 18,
+          "sodium": 20,
+          "chloride": 45,
+          "sulfate": 105,
+          "bicarbonate": 235
+        }
+      }
+    },
+    {
+      "name": "london",
+      "title": "Лондон, портер",
+      "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
+      "bjpc_styles": [
+        "13C"
+      ],
+      "ions": {
+        "unit": "mg/l",
+        "values": {
+          "calcium": 100,
+          "magnesium": 5,
+          "sodium": 35,
+          "chloride": 60,
+          "sulfate": 50,
+          "bicarbonate": 265
+        }
+      }
+    },
+    {
+      "name": "munich",
+      "title": "Мюнхен, тёмный лагер",
+      "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
+      "bjpc_styles": [
+        "8A",
+        "8B",
+        "9A"
+      ],
+      "ions": {
+        "unit": "mg/l",
+        "values": {
+          "calcium": 82,
+          "magnesium": 20,
+          "sodium": 4,
+          "chloride": 2,
+          "sulfate": 16,
+          "bicarbonate": 320
+        }
+      }
+    },
+    {
+      "name": "munich_decarbonated",
+      "title": "Мюнхен, декарбонизированный",
+      "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
+      "bjpc_styles": [
+        "6A",
+        "4C"
+      ],
+      "ions": {
+        "unit": "mg/l",
+        "values": {
+          "calcium": 40,
+          "magnesium": 20,
+          "sodium": 4,
+          "chloride": 75,
+          "sulfate": 52,
+          "bicarbonate": 29
+        }
+      }
+    },
+    {
+      "name": "pilsen",
+      "title": "Пльзень, светлый лагер",
+      "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
+      "bjpc_styles": [
+        "3B",
+        "4A"
+      ],
+      "ions": {
+        "unit": "mg/l",
+        "values": {
+          "calcium": 7,
+          "magnesium": 3,
+          "sodium": 2,
+          "chloride": 5,
+          "sulfate": 5,
+          "bicarbonate": 25
+        }
+      }
+    },
+    {
+      "name": "dusseldorf",
+      "title": "Дюссельдорф, альтбир",
+      "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
+      "bjpc_styles": [
+        "7B"
+      ],
+      "ions": {
+        "unit": "mg/l",
+        "values": {
+          "calcium": 90,
+          "magnesium": 12,
+          "sodium": 45,
+          "chloride": 82,
+          "sulfate": 65,
+          "bicarbonate": 223
+        }
+      }
+    },
+    {
+      "name": "spirit_of_the_west",
+      "title": "Westbound & Down — Spirit of the West",
+      "source_url": "https://www.beerandbrewing.com/recipe-westbound-down-spirit-of-the-west",
+      "bjpc_styles": [
+        "21A"
+      ],
+      "ions": {
+        "unit": "mg/l",
+        "values": {
+          "calcium": 109,
+          "sulfate": 150,
+          "chloride": 89
+        }
+      }
+    },
+    {
+      "name": "tropical_vibes",
+      "title": "Swamp Head — Tropical Vibes",
+      "source_url": "https://www.beerandbrewing.com/recipe-swamp-head-tropical-vibes",
+      "bjpc_styles": [
+        "29A"
+      ],
+      "ions": {
+        "unit": "mg/l",
+        "values": {
+          "calcium": 75,
+          "magnesium": 19,
+          "sodium": 12,
+          "sulfate": 90,
+          "chloride": 104
+        }
+      }
+    }
+  ]
+}
