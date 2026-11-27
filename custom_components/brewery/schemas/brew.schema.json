@@ -227,12 +227,6 @@
           "description": "Тип записи журнала."
         },
         "ingredient_kind": {
-          "enum": [
-            "hop",
-            "malt",
-            "salt",
-            "acid"
-          ],
           "description": "Вид ингредиента. Определяет допустимую величину навески и правила для формы кислоты."
         },
         "ingredient": {
@@ -258,72 +252,74 @@
       "allOf": [
         {
           "$ref": "#/$defs/journal_entry"
-        },
+        }
+      ],
+      "unevaluatedProperties": false,
+      "oneOf": [
         {
-          "if": {
-            "properties": {
-              "ingredient_kind": {
-                "const": "acid"
+          "properties": {
+            "ingredient_kind": {
+              "enum": [
+                "hop",
+                "malt",
+                "salt"
+              ]
+            },
+            "amount": {
+              "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/MassType",
+              "properties": {
+                "value": {
+                  "exclusiveMinimum": 0
+                }
               }
             }
-          },
-          "then": {
-            "oneOf": [
-              {
-                "properties": {
-                  "ingredient": {
-                    "const": "citric_acid"
-                  },
-                  "amount": {
-                    "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/MassType",
-                    "properties": {
-                      "value": {
-                        "exclusiveMinimum": 0
-                      },
-                      "unit": {
-                        "const": "mg",
-                        "description": "Единица дозировки этой формы кислоты."
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "properties": {
-                  "ingredient": {
-                    "const": "lactic_acid_80_percent"
-                  },
-                  "amount": {
-                    "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
-                    "properties": {
-                      "value": {
-                        "exclusiveMinimum": 0
-                      },
-                      "unit": {
-                        "const": "ml",
-                        "description": "Единица дозировки этой формы кислоты."
-                      }
-                    }
-                  }
+          }
+        },
+        {
+          "properties": {
+            "ingredient_kind": {
+              "const": "acid"
+            },
+            "ingredient": {
+              "const": "citric_acid"
+            },
+            "amount": {
+              "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/MassType",
+              "properties": {
+                "value": {
+                  "exclusiveMinimum": 0
+                },
+                "unit": {
+                  "const": "mg",
+                  "description": "Единица дозировки этой формы кислоты."
                 }
               }
-            ]
-          },
-          "else": {
-            "properties": {
-              "amount": {
-                "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/MassType",
-                "properties": {
-                  "value": {
-                    "exclusiveMinimum": 0
-                  }
+            }
+          }
+        },
+        {
+          "properties": {
+            "ingredient_kind": {
+              "const": "acid"
+            },
+            "ingredient": {
+              "const": "lactic_acid_80_percent"
+            },
+            "amount": {
+              "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
+              "properties": {
+                "value": {
+                  "exclusiveMinimum": 0
+                },
+                "unit": {
+                  "const": "ml",
+                  "description": "Единица дозировки этой формы кислоты."
                 }
               }
             }
           }
         }
-      ],
-      "unevaluatedProperties": false
+      ]
     },
     "sparge_water_added": {
       "description": "Фактическая порция воды, добавленная при промывке.",
