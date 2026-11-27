@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Edheltur/ha-brewery/master/custom_components/brewery/schemas/water_profiles.schema.json",
+  "type": "object",
+  "properties": {
+    "bjcp_edition": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Редакция каталога BJCP, в которой определены коды стилей профилей воды."
+    },
+    "profiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "name.schema.json"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string"
+          },
+          "source_url": {
+            "type": "string",
+            "minLength": 1,
+            "format": "uri"
+          },
+          "bjpc_styles": {
+            "type": "array",
+            "items": {
+              "$ref": "bjcp.schema.json#/$defs/style_code"
+            },
+            "uniqueItems": true,
+            "description": "Коды подходящих стилей из каталога BJCP указанной редакции. Существование кода проверяется по данным каталога. Пустой список означает, что конкретные стили не указаны."
+          },
+          "ions": {
+            "description": "Целевые концентрации ионов с общей единицей из записи справочника.",
+            "type": "object",
+            "properties": {
+              "unit": {
+                "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/ConcentrationUnitType",
+                "description": "Единица концентрации для всех значений этого профиля."
+              },
+              "values": {
+                "$ref": "ions.schema.json",
+                "description": "Цели по ионам. Пропуск означает незаданную цель. Явный ноль задаёт нулевую цель."
+              }
+            },
+            "required": [
+              "unit",
+              "values"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "name",
+          "title",
+          "source_url",
+          "bjpc_styles",
+          "ions"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "bjcp_edition",
+    "profiles"
+  ],
+  "additionalProperties": false
+}

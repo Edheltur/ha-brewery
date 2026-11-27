@@ -1,0 +1,228 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Edheltur/ha-brewery/master/custom_components/brewery/schemas/bjcp.schema.json",
+  "type": "object",
+  "properties": {
+    "guide": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Официальное название руководства BJCP, по которому составлен каталог."
+    },
+    "edition": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Год редакции руководства BJCP, например 2021."
+    },
+    "source_url": {
+      "type": "string",
+      "minLength": 1,
+      "format": "uri",
+      "description": "Ссылка на руководство BJCP указанной редакции."
+    },
+    "copyright": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Строка об авторских правах на исходное руководство."
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Код категории BJCP в виде строки, например 25."
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Название категории из руководства BJCP."
+          },
+          "styles": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "$ref": "#/$defs/style_code"
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Название стиля или варианта из руководства. Вместе с кодом и редакцией различает записи с общим кодом."
+                },
+                "ranges": {
+                  "type": "object",
+                  "properties": {
+                    "og": {
+                      "$ref": "#/$defs/gravity_range",
+                      "description": "Начальная плотность сусла до брожения в единицах относительной плотности (sg)."
+                    },
+                    "fg": {
+                      "$ref": "#/$defs/gravity_range",
+                      "description": "Конечная плотность пива после брожения в единицах относительной плотности (sg)."
+                    },
+                    "ibu": {
+                      "$ref": "#/$defs/interval",
+                      "description": "Горечь пива в международных единицах горечи (IBUs)."
+                    },
+                    "srm": {
+                      "oneOf": [
+                        {
+                          "$ref": "#/$defs/color_interval",
+                          "description": "Один диапазон для стиля."
+                        },
+                        {
+                          "type": "object",
+                          "minProperties": 1,
+                          "propertyNames": {
+                            "enum": [
+                              "pale",
+                              "dark"
+                            ],
+                            "description": "Светлый и тёмный варианты цвета."
+                          },
+                          "additionalProperties": {
+                            "$ref": "#/$defs/color_interval",
+                            "description": "Диапазон показателя для варианта, указанного в ключе."
+                          },
+                          "description": "Отдельные диапазоны для вариантов стиля. Каждый ключ обозначает вариант, каждое значение содержит его границы."
+                        }
+                      ],
+                      "description": "Цвет пива по шкале Standard Reference Method (SRM)."
+                    },
+                    "abv": {
+                      "oneOf": [
+                        {
+                          "$ref": "#/$defs/interval",
+                          "description": "Один диапазон для стиля."
+                        },
+                        {
+                          "type": "object",
+                          "minProperties": 1,
+                          "propertyNames": {
+                            "enum": [
+                              "table",
+                              "standard",
+                              "super"
+                            ],
+                            "description": "Столовый, стандартный и крепкий варианты."
+                          },
+                          "additionalProperties": {
+                            "$ref": "#/$defs/interval",
+                            "description": "Диапазон показателя для варианта, указанного в ключе."
+                          },
+                          "description": "Отдельные диапазоны для вариантов стиля. Каждый ключ обозначает вариант, каждое значение содержит его границы."
+                        }
+                      ],
+                      "description": "Объёмная доля алкоголя в процентах. Значение 5 означает 5% об."
+                    }
+                  },
+                  "required": [],
+                  "additionalProperties": false,
+                  "description": "Опубликованные числовые диапазоны стиля. Пропущенный показатель означает, что в каталоге для него нет числового диапазона."
+                }
+              },
+              "required": [
+                "code",
+                "name",
+                "ranges"
+              ],
+              "additionalProperties": false,
+              "description": "Стиль или именованный вариант стиля из руководства BJCP."
+            },
+            "description": "Стили и варианты стилей, отнесённые к этой категории."
+          }
+        },
+        "required": [
+          "code",
+          "name",
+          "styles"
+        ],
+        "additionalProperties": false,
+        "description": "Категория стилей в указанной редакции BJCP."
+      },
+      "description": "Категории руководства со списками входящих в них стилей."
+    }
+  },
+  "required": [
+    "guide",
+    "edition",
+    "source_url",
+    "copyright",
+    "categories"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "interval": {
+      "type": "object",
+      "properties": {
+        "min": {
+          "type": "number",
+          "description": "Нижняя граница диапазона в единице, указанной в описании показателя."
+        },
+        "max": {
+          "type": "number",
+          "description": "Верхняя граница диапазона в единице, указанной в описании показателя."
+        }
+      },
+      "required": [
+        "min",
+        "max"
+      ],
+      "additionalProperties": false,
+      "description": "Числовой диапазон показателя стиля."
+    },
+    "color_interval": {
+      "type": "object",
+      "properties": {
+        "min": {
+          "type": "number",
+          "description": "Нижняя граница диапазона цвета в SRM."
+        },
+        "max": {
+          "type": "number",
+          "description": "Верхняя граница диапазона цвета в SRM."
+        },
+        "varies_by_fruit": {
+          "type": "boolean",
+          "description": "Цвет готового пива зависит от использованных фруктов. Указанный диапазон SRM описывает базовый цвет."
+        }
+      },
+      "required": [
+        "min",
+        "max"
+      ],
+      "additionalProperties": false,
+      "description": "Диапазон цвета в SRM с возможной отметкой о влиянии фруктов."
+    },
+    "style_code": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Код стиля в редакции BJCP, например 25B. У нескольких именованных вариантов может быть общий код."
+    },
+    "gravity_range": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/interval",
+          "description": "Один диапазон для стиля."
+        },
+        {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": {
+            "const": "standard",
+            "description": "Диапазон плотности для варианта стандартной крепости."
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/interval",
+            "description": "Диапазон показателя для варианта, указанного в ключе."
+          },
+          "description": "Отдельные диапазоны для вариантов стиля. Каждый ключ обозначает вариант, каждое значение содержит его границы."
+        }
+      ]
+    }
+  },
+  "description": "Каталог категорий и стилей пива BJCP с числовыми ориентирами для рецептов."
+}

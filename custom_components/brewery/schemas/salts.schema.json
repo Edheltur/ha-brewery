@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Edheltur/ha-brewery/master/custom_components/brewery/schemas/salts.schema.json",
+  "type": "object",
+  "properties": {
+    "salts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "name.schema.json"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string"
+          },
+          "base_salt_name": {
+            "$ref": "name.schema.json"
+          },
+          "ions": {
+            "description": "Масса каждого иона на одну единицу массы соли. null означает, что вклад этой формы неизвестен в модели водоподготовки.",
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "unit": {
+                    "const": "mg/g",
+                    "description": "Миллиграммы иона на грамм соли."
+                  },
+                  "values": {
+                    "$ref": "ions.schema.json",
+                    "description": "Масса каждого иона в миллиграммах на грамм соли."
+                  }
+                },
+                "required": [
+                  "unit",
+                  "values"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "title",
+          "base_salt_name",
+          "ions"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "salts"
+  ],
+  "additionalProperties": false,
+  "examples": [
+    {
+      "salts": [
+        {
+          "name": "calcium_chloride_dihydrate",
+          "title": "Хлорид кальция, двуводный",
+          "base_salt_name": "calcium_chloride",
+          "ions": {
+            "unit": "mg/g",
+            "values": {
+              "calcium": 272.6,
+              "chloride": 482.3
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

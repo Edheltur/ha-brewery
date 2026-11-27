@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Edheltur/ha-brewery/master/custom_components/brewery/schemas/process.schema.json",
+  "type": "object",
+  "properties": {
+    "stages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "name.schema.json"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "actions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "$ref": "name.schema.json"
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "type": {
+                  "$ref": "name.schema.json"
+                },
+                "target": {
+                  "$ref": "name.schema.json"
+                },
+                "portion": {
+                  "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
+                  "properties": {
+                    "value": {
+                      "exclusiveMinimum": 0
+                    }
+                  }
+                },
+                "parameters": {
+                  "type": "object",
+                  "description": "Параметры зарегистрированного обработчика. Их предметные ограничения проверяет обработчик."
+                }
+              },
+              "required": [
+                "name",
+                "title",
+                "type"
+              ],
+              "additionalProperties": false,
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "type": {
+                        "const": "portioned_addition"
+                      }
+                    }
+                  },
+                  "then": {
+                    "required": [
+                      "portion",
+                      "target"
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "transitions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "action": {
+                  "$ref": "name.schema.json"
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "to": {
+                  "$ref": "name.schema.json"
+                }
+              },
+              "required": [
+                "action",
+                "title",
+                "to"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "name",
+          "title"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Идентификатор закрепляемой версии правил процесса."
+    },
+    "initial_stage": {
+      "$ref": "name.schema.json"
+    }
+  },
+  "required": [
+    "stages",
+    "version",
+    "initial_stage"
+  ],
+  "additionalProperties": false,
+  "examples": [
+    {
+      "stages": [
+        {
+          "name": "lautering",
+          "title": "Фильтрация и промывка",
+          "actions": [
+            {
+              "name": "add_sparge_water",
+              "type": "portioned_addition",
+              "target": "planned_sparge_volume",
+              "portion": {
+                "value": 2,
+                "unit": "l"
+              },
+              "title": "Внести {amount} воды"
+            }
+          ],
+          "transitions": [
+            {
+              "action": "finish_lautering",
+              "title": "Закончить фильтрацию и промывку",
+              "to": "pre_boil"
+            }
+          ]
+        },
+        {
+          "name": "pre_boil",
+          "title": "Подготовка к кипячению"
+        }
+      ],
+      "version": "1",
+      "initial_stage": "lautering"
+    }
+  ]
+}
