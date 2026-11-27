@@ -27,22 +27,17 @@
               {
                 "type": "object",
                 "properties": {
-                  "ion_unit": {
-                    "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/MassUnitType",
-                    "description": "Единица массы ионов в values."
-                  },
-                  "salt_unit": {
-                    "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/MassUnitType",
-                    "description": "Единица массы соли, на которую рассчитаны значения."
+                  "unit": {
+                    "const": "mg/g",
+                    "description": "Миллиграммы иона на грамм соли."
                   },
                   "values": {
                     "$ref": "ions.schema.json",
-                    "description": "Масса каждого иона на одну salt_unit соли."
+                    "description": "Масса каждого иона в миллиграммах на грамм соли."
                   }
                 },
                 "required": [
-                  "ion_unit",
-                  "salt_unit",
+                  "unit",
                   "values"
                 ],
                 "additionalProperties": false
@@ -75,8 +70,7 @@
           "title": "Хлорид кальция, двуводный",
           "base_salt_name": "calcium_chloride",
           "ions": {
-            "ion_unit": "mg",
-            "salt_unit": "g",
+            "unit": "mg/g",
             "values": {
               "calcium": 272.6,
               "chloride": 482.3

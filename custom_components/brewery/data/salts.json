@@ -5,8 +5,7 @@
       "title": "Хлорид кальция, безводный",
       "base_salt_name": "calcium_chloride",
       "ions": {
-        "ion_unit": "mg",
-        "salt_unit": "g",
+        "unit": "mg/g",
         "values": {
           "calcium": 361.1,
           "chloride": 638.9
@@ -18,8 +17,7 @@
       "title": "Хлорид кальция, двуводный",
       "base_salt_name": "calcium_chloride",
       "ions": {
-        "ion_unit": "mg",
-        "salt_unit": "g",
+        "unit": "mg/g",
         "values": {
           "calcium": 272.6,
           "chloride": 482.3
@@ -31,8 +29,7 @@
       "title": "Сульфат кальция, двуводный (гипс)",
       "base_salt_name": "calcium_sulfate",
       "ions": {
-        "ion_unit": "mg",
-        "salt_unit": "g",
+        "unit": "mg/g",
         "values": {
           "calcium": 232.8,
           "sulfate": 557.9
@@ -44,8 +41,7 @@
       "title": "Сульфат магния, семиводный",
       "base_salt_name": "magnesium_sulfate",
       "ions": {
-        "ion_unit": "mg",
-        "salt_unit": "g",
+        "unit": "mg/g",
         "values": {
           "magnesium": 98.6,
           "sulfate": 389.7
@@ -57,8 +53,7 @@
       "title": "Гидрокарбонат натрия (пищевая сода)",
       "base_salt_name": "sodium_bicarbonate",
       "ions": {
-        "ion_unit": "mg",
-        "salt_unit": "g",
+        "unit": "mg/g",
         "values": {
           "sodium": 273.7,
           "bicarbonate": 726.3
@@ -70,8 +65,7 @@
       "title": "Хлорид натрия (поваренная соль)",
       "base_salt_name": "sodium_chloride",
       "ions": {
-        "ion_unit": "mg",
-        "salt_unit": "g",
+        "unit": "mg/g",
         "values": {
           "sodium": 393.4,
           "chloride": 606.6
