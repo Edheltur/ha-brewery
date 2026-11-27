@@ -1,0 +1,12 @@
+{
+  "domain": "brewery",
+  "name": "Brewery",
+  "codeowners": ["@Edheltur"],
+  "config_flow": true,
+  "documentation": "https://github.com/Edheltur/ha-brewery",
+  "integration_type": "service",
+  "iot_class": "calculated",
+  "issue_tracker": "https://github.com/Edheltur/ha-brewery/issues",
+  "single_config_entry": true,
+  "version": "0.1.0"
+}
