@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ha-brewery.invalid/schemas/water_profiles.schema.json",
+  "type": "object",
+  "properties": {
+    "bjcp_edition": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "profiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "common.schema.json#/$defs/name"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string"
+          },
+          "source_url": {
+            "type": "string",
+            "minLength": 1,
+            "format": "uri"
+          },
+          "bjpc_styles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          },
+          "ions_mg_per_l": {
+            "$ref": "common.schema.json#/$defs/ions",
+            "description": "Цели в мг/л. Пропуск снимает цель, ноль задаёт нулевую цель."
+          }
+        },
+        "required": [
+          "name",
+          "title",
+          "source_url",
+          "bjpc_styles",
+          "ions_mg_per_l"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "bjcp_edition",
+    "profiles"
+  ],
+  "additionalProperties": false
+}

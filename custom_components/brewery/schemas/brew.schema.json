@@ -1,0 +1,489 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ha-brewery.invalid/schemas/brew.schema.json",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "recipe_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "recipe_revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "process_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "journal": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#/$defs/transition"
+          },
+          {
+            "$ref": "#/$defs/sparge_water_added"
+          },
+          {
+            "$ref": "#/$defs/boil_start_volume"
+          },
+          {
+            "$ref": "#/$defs/boil_end_volume"
+          },
+          {
+            "$ref": "#/$defs/kettle_remainder"
+          },
+          {
+            "$ref": "#/$defs/density_sample"
+          },
+          {
+            "$ref": "#/$defs/ph_sample"
+          },
+          {
+            "$ref": "#/$defs/transfer"
+          },
+          {
+            "$ref": "#/$defs/hop_added"
+          },
+          {
+            "$ref": "#/$defs/malt_added"
+          },
+          {
+            "$ref": "#/$defs/salt_added"
+          },
+          {
+            "$ref": "#/$defs/acid_added"
+          }
+        ]
+      },
+      "description": "Порядок принятия записей. У перехода stage — исходный этап. Фактическое время определяет порядок показа."
+    }
+  },
+  "required": [
+    "schema_version",
+    "id",
+    "recipe_id",
+    "recipe_revision",
+    "process_version",
+    "journal"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "transition": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "transition"
+        },
+        "to": {
+          "$ref": "common.schema.json#/$defs/name"
+        }
+      },
+      "required": [
+        "type",
+        "to"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/journal_entry"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "sparge_water_added": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "sparge_water_added"
+        },
+        "volume_l": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      },
+      "required": [
+        "type",
+        "volume_l"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/journal_entry"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "boil_start_volume": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "boil_start_volume"
+        },
+        "volume_l": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "type",
+        "volume_l"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/journal_entry"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "boil_end_volume": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "boil_end_volume"
+        },
+        "volume_l": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "type",
+        "volume_l"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/journal_entry"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "kettle_remainder": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "kettle_remainder"
+        },
+        "volume_l": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "type",
+        "volume_l"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/journal_entry"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "density_sample": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "density_sample"
+        },
+        "value_bx": {
+          "type": "number"
+        },
+        "instrument": {
+          "type": "string",
+          "minLength": 1
+        },
+        "temperature_c": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "type",
+        "value_bx",
+        "instrument",
+        "temperature_c"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/journal_entry"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "ph_sample": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "ph_sample"
+        },
+        "ph": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "type",
+        "ph"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/journal_entry"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "transfer": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "transfer"
+        },
+        "fermenter_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "volume_l": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "fermentation_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "type",
+        "fermenter_id",
+        "volume_l"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/journal_entry"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "hop_added": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "hop_added"
+        },
+        "ingredient": {
+          "type": "string",
+          "minLength": 1
+        },
+        "amount": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "unit": {
+              "enum": [
+                "mg",
+                "g",
+                "kg",
+                "oz",
+                "lb"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "unit"
+          ],
+          "additionalProperties": false
+        },
+        "recipe_item_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "type",
+        "ingredient",
+        "amount"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/journal_entry"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "malt_added": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "malt_added"
+        },
+        "ingredient": {
+          "type": "string",
+          "minLength": 1
+        },
+        "amount": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "unit": {
+              "enum": [
+                "mg",
+                "g",
+                "kg",
+                "oz",
+                "lb"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "unit"
+          ],
+          "additionalProperties": false
+        },
+        "recipe_item_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "type",
+        "ingredient",
+        "amount"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/journal_entry"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "salt_added": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "salt_added"
+        },
+        "ingredient": {
+          "type": "string",
+          "minLength": 1
+        },
+        "amount": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "unit": {
+              "enum": [
+                "mg",
+                "g",
+                "kg",
+                "oz",
+                "lb"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "unit"
+          ],
+          "additionalProperties": false
+        },
+        "recipe_item_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "type",
+        "ingredient",
+        "amount"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/journal_entry"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "acid_added": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "acid_added"
+        },
+        "ingredient": {
+          "type": "string",
+          "minLength": 1
+        },
+        "amount": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "unit": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "value",
+            "unit"
+          ],
+          "additionalProperties": false
+        },
+        "recipe_item_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "type",
+        "ingredient",
+        "amount"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/journal_entry"
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "journal_entry": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stage": {
+          "$ref": "common.schema.json#/$defs/name"
+        },
+        "occurred_at": {
+          "type": "string",
+          "minLength": 1,
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "stage",
+        "occurred_at"
+      ]
+    }
+  }
+}

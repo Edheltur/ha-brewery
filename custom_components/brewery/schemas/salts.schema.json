@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ha-brewery.invalid/schemas/salts.schema.json",
+  "type": "object",
+  "properties": {
+    "salts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "common.schema.json#/$defs/name"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string"
+          },
+          "base_salt_name": {
+            "$ref": "common.schema.json#/$defs/name"
+          },
+          "ions_mg_per_g": {
+            "$ref": "common.schema.json#/$defs/ions",
+            "description": "Мг каждого иона на грамм конкретной формы соли."
+          }
+        },
+        "required": [
+          "name",
+          "title",
+          "base_salt_name",
+          "ions_mg_per_g"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "salts"
+  ],
+  "additionalProperties": false,
+  "examples": [
+    {
+      "salts": [
+        {
+          "name": "calcium_chloride_dihydrate",
+          "title": "Хлорид кальция, двуводный",
+          "base_salt_name": "calcium_chloride",
+          "ions_mg_per_g": {
+            "calcium": 272.6,
+            "chloride": 482.3
+          }
+        }
+      ]
+    }
+  ]
+}

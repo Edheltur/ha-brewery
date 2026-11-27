@@ -1,0 +1,248 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ha-brewery.invalid/schemas/bjcp.schema.json",
+  "type": "object",
+  "properties": {
+    "guide": {
+      "type": "string",
+      "minLength": 1
+    },
+    "edition": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "source": {
+      "type": "string",
+      "minLength": 1,
+      "format": "uri"
+    },
+    "copyright": {
+      "type": "string",
+      "minLength": 1
+    },
+    "units": {
+      "type": "object",
+      "properties": {
+        "og": {
+          "const": "SG"
+        },
+        "fg": {
+          "const": "SG"
+        },
+        "ibu": {
+          "const": "IBU"
+        },
+        "srm": {
+          "const": "SRM"
+        },
+        "abv": {
+          "const": "%"
+        }
+      },
+      "required": [
+        "og",
+        "fg",
+        "ibu",
+        "srm",
+        "abv"
+      ],
+      "additionalProperties": false
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "styles": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "ranges": {
+                  "type": "object",
+                  "properties": {
+                    "og": {
+                      "oneOf": [
+                        {
+                          "$ref": "#/$defs/interval"
+                        },
+                        {
+                          "type": "object",
+                          "minProperties": 1,
+                          "propertyNames": {
+                            "enum": [
+                              "pale",
+                              "dark",
+                              "standard",
+                              "super",
+                              "table"
+                            ]
+                          },
+                          "additionalProperties": {
+                            "$ref": "#/$defs/interval"
+                          }
+                        }
+                      ]
+                    },
+                    "fg": {
+                      "oneOf": [
+                        {
+                          "$ref": "#/$defs/interval"
+                        },
+                        {
+                          "type": "object",
+                          "minProperties": 1,
+                          "propertyNames": {
+                            "enum": [
+                              "pale",
+                              "dark",
+                              "standard",
+                              "super",
+                              "table"
+                            ]
+                          },
+                          "additionalProperties": {
+                            "$ref": "#/$defs/interval"
+                          }
+                        }
+                      ]
+                    },
+                    "ibu": {
+                      "oneOf": [
+                        {
+                          "$ref": "#/$defs/interval"
+                        },
+                        {
+                          "type": "object",
+                          "minProperties": 1,
+                          "propertyNames": {
+                            "enum": [
+                              "pale",
+                              "dark",
+                              "standard",
+                              "super",
+                              "table"
+                            ]
+                          },
+                          "additionalProperties": {
+                            "$ref": "#/$defs/interval"
+                          }
+                        }
+                      ]
+                    },
+                    "srm": {
+                      "oneOf": [
+                        {
+                          "$ref": "#/$defs/interval"
+                        },
+                        {
+                          "type": "object",
+                          "minProperties": 1,
+                          "propertyNames": {
+                            "enum": [
+                              "pale",
+                              "dark",
+                              "standard",
+                              "super",
+                              "table"
+                            ]
+                          },
+                          "additionalProperties": {
+                            "$ref": "#/$defs/interval"
+                          }
+                        }
+                      ]
+                    },
+                    "abv": {
+                      "oneOf": [
+                        {
+                          "$ref": "#/$defs/interval"
+                        },
+                        {
+                          "type": "object",
+                          "minProperties": 1,
+                          "propertyNames": {
+                            "enum": [
+                              "pale",
+                              "dark",
+                              "standard",
+                              "super",
+                              "table"
+                            ]
+                          },
+                          "additionalProperties": {
+                            "$ref": "#/$defs/interval"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "required": [],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "code",
+                "name",
+                "ranges"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "code",
+          "name",
+          "styles"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "guide",
+    "edition",
+    "source",
+    "copyright",
+    "units",
+    "categories"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "interval": {
+      "type": "object",
+      "properties": {
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "varies_by_fruit": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "min",
+        "max"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

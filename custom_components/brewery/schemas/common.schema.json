@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ha-brewery.invalid/schemas/common.schema.json",
+  "$defs": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[0-9a-z_]+$"
+    },
+    "ions": {
+      "type": "object",
+      "properties": {
+        "calcium": {
+          "type": "number",
+          "minimum": 0
+        },
+        "magnesium": {
+          "type": "number",
+          "minimum": 0
+        },
+        "sodium": {
+          "type": "number",
+          "minimum": 0
+        },
+        "chloride": {
+          "type": "number",
+          "minimum": 0
+        },
+        "sulfate": {
+          "type": "number",
+          "minimum": 0
+        },
+        "bicarbonate": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "minProperties": 1
+    }
+  }
+}

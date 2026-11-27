@@ -23,7 +23,7 @@
 
 Диалект схемы и версия сохранённого документа меняются независимо. Для импорта BeerJSON закрепляем проверенную ревизию внешних схем. Правила, связывающие документы, включая существование кода BJCP и уникальность технического имени в каталоге, проверяются отдельно от структуры.
 
-Схемы для ревью: [common.schema.json](https://chatgpt.com/library?file_id=libfile_2c4ad027b34081919b15ee5ab62e0042&account_id=personal), [bjcp.schema.json](https://chatgpt.com/library?file_id=libfile_893339da6fe48191b7d984dd342e1ef5&account_id=personal), [brew.schema.json](https://chatgpt.com/library?file_id=libfile_2e2ced922d2881919672e4a69104463d&account_id=personal), [process.schema.json](https://chatgpt.com/library?file_id=libfile_abe71d2601c8819199239e977f437d44&account_id=personal), [salts.schema.json](https://chatgpt.com/library?file_id=libfile_3251bf1a57a08191a3d103b0c1de496e&account_id=personal), [water_profiles.schema.json](https://chatgpt.com/library?file_id=libfile_d1e2c840de188191830b6e367bc70850&account_id=personal).
+Схемы для ревью: [common.schema.json](../custom_components/brewery/schemas/common.schema.json), [bjcp.schema.json](../custom_components/brewery/schemas/bjcp.schema.json), [brew.schema.json](../custom_components/brewery/schemas/brew.schema.json), [process.schema.json](../custom_components/brewery/schemas/process.schema.json), [salts.schema.json](../custom_components/brewery/schemas/salts.schema.json), [water_profiles.schema.json](../custom_components/brewery/schemas/water_profiles.schema.json).
 
 При описании и ревью применяем следующие правила.
 
