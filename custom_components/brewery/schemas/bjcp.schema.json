@@ -56,87 +56,15 @@
                   "type": "object",
                   "properties": {
                     "og": {
-                      "oneOf": [
-                        {
-                          "$ref": "#/$defs/interval",
-                          "description": "Один диапазон для стиля."
-                        },
-                        {
-                          "type": "object",
-                          "minProperties": 1,
-                          "propertyNames": {
-                            "enum": [
-                              "pale",
-                              "dark",
-                              "standard",
-                              "super",
-                              "table"
-                            ],
-                            "description": "Обозначения вариантов BJCP. Pale и dark различают светлый и тёмный варианты. Table, standard и super различают варианты по крепости."
-                          },
-                          "additionalProperties": {
-                            "$ref": "#/$defs/interval",
-                            "description": "Диапазон показателя для варианта, указанного в ключе."
-                          },
-                          "description": "Отдельные диапазоны для вариантов стиля. Каждый ключ обозначает вариант, каждое значение содержит его границы."
-                        }
-                      ],
+                      "$ref": "#/$defs/gravity_range",
                       "description": "Начальная плотность сусла до брожения в единицах относительной плотности (sg)."
                     },
                     "fg": {
-                      "oneOf": [
-                        {
-                          "$ref": "#/$defs/interval",
-                          "description": "Один диапазон для стиля."
-                        },
-                        {
-                          "type": "object",
-                          "minProperties": 1,
-                          "propertyNames": {
-                            "enum": [
-                              "pale",
-                              "dark",
-                              "standard",
-                              "super",
-                              "table"
-                            ],
-                            "description": "Обозначения вариантов BJCP. Pale и dark различают светлый и тёмный варианты. Table, standard и super различают варианты по крепости."
-                          },
-                          "additionalProperties": {
-                            "$ref": "#/$defs/interval",
-                            "description": "Диапазон показателя для варианта, указанного в ключе."
-                          },
-                          "description": "Отдельные диапазоны для вариантов стиля. Каждый ключ обозначает вариант, каждое значение содержит его границы."
-                        }
-                      ],
+                      "$ref": "#/$defs/gravity_range",
                       "description": "Конечная плотность пива после брожения в единицах относительной плотности (sg)."
                     },
                     "ibu": {
-                      "oneOf": [
-                        {
-                          "$ref": "#/$defs/interval",
-                          "description": "Один диапазон для стиля."
-                        },
-                        {
-                          "type": "object",
-                          "minProperties": 1,
-                          "propertyNames": {
-                            "enum": [
-                              "pale",
-                              "dark",
-                              "standard",
-                              "super",
-                              "table"
-                            ],
-                            "description": "Обозначения вариантов BJCP. Pale и dark различают светлый и тёмный варианты. Table, standard и super различают варианты по крепости."
-                          },
-                          "additionalProperties": {
-                            "$ref": "#/$defs/interval",
-                            "description": "Диапазон показателя для варианта, указанного в ключе."
-                          },
-                          "description": "Отдельные диапазоны для вариантов стиля. Каждый ключ обозначает вариант, каждое значение содержит его границы."
-                        }
-                      ],
+                      "$ref": "#/$defs/interval",
                       "description": "Горечь пива в международных единицах горечи (IBUs)."
                     },
                     "srm": {
@@ -151,12 +79,9 @@
                           "propertyNames": {
                             "enum": [
                               "pale",
-                              "dark",
-                              "standard",
-                              "super",
-                              "table"
+                              "dark"
                             ],
-                            "description": "Обозначения вариантов BJCP. Pale и dark различают светлый и тёмный варианты. Table, standard и super различают варианты по крепости."
+                            "description": "Светлый и тёмный варианты цвета."
                           },
                           "additionalProperties": {
                             "$ref": "#/$defs/color_interval",
@@ -178,13 +103,11 @@
                           "minProperties": 1,
                           "propertyNames": {
                             "enum": [
-                              "pale",
-                              "dark",
+                              "table",
                               "standard",
-                              "super",
-                              "table"
+                              "super"
                             ],
-                            "description": "Обозначения вариантов BJCP. Pale и dark различают светлый и тёмный варианты. Table, standard и super различают варианты по крепости."
+                            "description": "Столовый, стандартный и крепкий варианты."
                           },
                           "additionalProperties": {
                             "$ref": "#/$defs/interval",
@@ -278,6 +201,27 @@
       "type": "string",
       "minLength": 1,
       "description": "Код стиля в редакции BJCP, например 25B. У нескольких именованных вариантов может быть общий код."
+    },
+    "gravity_range": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/interval",
+          "description": "Один диапазон для стиля."
+        },
+        {
+          "type": "object",
+          "minProperties": 1,
+          "propertyNames": {
+            "const": "standard",
+            "description": "Диапазон плотности для варианта стандартной крепости."
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/interval",
+            "description": "Диапазон показателя для варианта, указанного в ключе."
+          },
+          "description": "Отдельные диапазоны для вариантов стиля. Каждый ключ обозначает вариант, каждое значение содержит его границы."
+        }
+      ]
     }
   },
   "description": "Каталог категорий и стилей пива BJCP с числовыми ориентирами для рецептов."
