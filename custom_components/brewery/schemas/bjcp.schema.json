@@ -5,43 +5,52 @@
   "properties": {
     "guide": {
       "type": "string",
-      "minLength": 1
+      "minLength": 1,
+      "description": "Официальное название руководства BJCP, по которому составлен каталог."
     },
     "edition": {
       "type": "integer",
-      "minimum": 1
+      "minimum": 1,
+      "description": "Год редакции руководства BJCP, например 2021."
     },
     "source_url": {
       "type": "string",
       "minLength": 1,
-      "format": "uri"
+      "format": "uri",
+      "description": "Ссылка на руководство BJCP указанной редакции."
     },
     "copyright": {
       "type": "string",
-      "minLength": 1
+      "minLength": 1,
+      "description": "Строка об авторских правах на исходное руководство."
     },
     "units": {
       "type": "object",
       "properties": {
         "og": {
           "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/GravityUnitType",
-          "const": "sg"
+          "const": "sg",
+          "description": "Единица начальной плотности сусла (original gravity). Код sg обозначает относительную плотность."
         },
         "fg": {
           "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/GravityUnitType",
-          "const": "sg"
+          "const": "sg",
+          "description": "Единица конечной плотности пива (final gravity). Код sg обозначает относительную плотность."
         },
         "ibu": {
           "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/BitternessUnitType",
-          "const": "IBUs"
+          "const": "IBUs",
+          "description": "Единица горечи. Код IBUs обозначает международные единицы горечи."
         },
         "srm": {
           "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/ColorUnitType",
-          "const": "SRM"
+          "const": "SRM",
+          "description": "Шкала цвета пива Standard Reference Method (SRM)."
         },
         "abv": {
           "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/PercentUnitType",
-          "const": "%"
+          "const": "%",
+          "description": "Единица объёмной доли алкоголя. Значение 5 означает 5% об."
         }
       },
       "required": [
@@ -51,7 +60,8 @@
         "srm",
         "abv"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Коды единиц BeerJSON для всех границ диапазонов в каталоге. Ключ совпадает с именем показателя в ranges."
     },
     "categories": {
       "type": "array",
@@ -60,11 +70,13 @@
         "properties": {
           "code": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "description": "Код категории BJCP в виде строки, например 25."
           },
           "name": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "description": "Название категории из руководства BJCP."
           },
           "styles": {
             "type": "array",
@@ -73,11 +85,13 @@
               "properties": {
                 "code": {
                   "type": "string",
-                  "minLength": 1
+                  "minLength": 1,
+                  "description": "Код стиля в редакции BJCP, например 25B. У нескольких именованных вариантов может быть общий код."
                 },
                 "name": {
                   "type": "string",
-                  "minLength": 1
+                  "minLength": 1,
+                  "description": "Название стиля или варианта из руководства. Вместе с кодом и редакцией различает записи с общим кодом."
                 },
                 "ranges": {
                   "type": "object",
@@ -85,7 +99,8 @@
                     "og": {
                       "oneOf": [
                         {
-                          "$ref": "#/$defs/interval"
+                          "$ref": "#/$defs/interval",
+                          "description": "Один диапазон для стиля."
                         },
                         {
                           "type": "object",
@@ -97,18 +112,23 @@
                               "standard",
                               "super",
                               "table"
-                            ]
+                            ],
+                            "description": "Обозначения вариантов BJCP. Pale и dark различают светлый и тёмный варианты. Table, standard и super различают варианты по крепости."
                           },
                           "additionalProperties": {
-                            "$ref": "#/$defs/interval"
-                          }
+                            "$ref": "#/$defs/interval",
+                            "description": "Диапазон показателя для варианта, указанного в ключе."
+                          },
+                          "description": "Отдельные диапазоны для вариантов стиля. Каждый ключ обозначает вариант, каждое значение содержит его границы."
                         }
-                      ]
+                      ],
+                      "description": "Начальная плотность сусла до брожения. Границы выражены в единице units.og."
                     },
                     "fg": {
                       "oneOf": [
                         {
-                          "$ref": "#/$defs/interval"
+                          "$ref": "#/$defs/interval",
+                          "description": "Один диапазон для стиля."
                         },
                         {
                           "type": "object",
@@ -120,18 +140,23 @@
                               "standard",
                               "super",
                               "table"
-                            ]
+                            ],
+                            "description": "Обозначения вариантов BJCP. Pale и dark различают светлый и тёмный варианты. Table, standard и super различают варианты по крепости."
                           },
                           "additionalProperties": {
-                            "$ref": "#/$defs/interval"
-                          }
+                            "$ref": "#/$defs/interval",
+                            "description": "Диапазон показателя для варианта, указанного в ключе."
+                          },
+                          "description": "Отдельные диапазоны для вариантов стиля. Каждый ключ обозначает вариант, каждое значение содержит его границы."
                         }
-                      ]
+                      ],
+                      "description": "Конечная плотность пива после брожения. Границы выражены в единице units.fg."
                     },
                     "ibu": {
                       "oneOf": [
                         {
-                          "$ref": "#/$defs/interval"
+                          "$ref": "#/$defs/interval",
+                          "description": "Один диапазон для стиля."
                         },
                         {
                           "type": "object",
@@ -143,18 +168,23 @@
                               "standard",
                               "super",
                               "table"
-                            ]
+                            ],
+                            "description": "Обозначения вариантов BJCP. Pale и dark различают светлый и тёмный варианты. Table, standard и super различают варианты по крепости."
                           },
                           "additionalProperties": {
-                            "$ref": "#/$defs/interval"
-                          }
+                            "$ref": "#/$defs/interval",
+                            "description": "Диапазон показателя для варианта, указанного в ключе."
+                          },
+                          "description": "Отдельные диапазоны для вариантов стиля. Каждый ключ обозначает вариант, каждое значение содержит его границы."
                         }
-                      ]
+                      ],
+                      "description": "Горечь пива. Границы выражены в единице units.ibu."
                     },
                     "srm": {
                       "oneOf": [
                         {
-                          "$ref": "#/$defs/color_interval"
+                          "$ref": "#/$defs/color_interval",
+                          "description": "Один диапазон для стиля."
                         },
                         {
                           "type": "object",
@@ -166,18 +196,23 @@
                               "standard",
                               "super",
                               "table"
-                            ]
+                            ],
+                            "description": "Обозначения вариантов BJCP. Pale и dark различают светлый и тёмный варианты. Table, standard и super различают варианты по крепости."
                           },
                           "additionalProperties": {
-                            "$ref": "#/$defs/color_interval"
-                          }
+                            "$ref": "#/$defs/color_interval",
+                            "description": "Диапазон показателя для варианта, указанного в ключе."
+                          },
+                          "description": "Отдельные диапазоны для вариантов стиля. Каждый ключ обозначает вариант, каждое значение содержит его границы."
                         }
-                      ]
+                      ],
+                      "description": "Цвет пива. Границы выражены в единице units.srm."
                     },
                     "abv": {
                       "oneOf": [
                         {
-                          "$ref": "#/$defs/interval"
+                          "$ref": "#/$defs/interval",
+                          "description": "Один диапазон для стиля."
                         },
                         {
                           "type": "object",
@@ -189,17 +224,22 @@
                               "standard",
                               "super",
                               "table"
-                            ]
+                            ],
+                            "description": "Обозначения вариантов BJCP. Pale и dark различают светлый и тёмный варианты. Table, standard и super различают варианты по крепости."
                           },
                           "additionalProperties": {
-                            "$ref": "#/$defs/interval"
-                          }
+                            "$ref": "#/$defs/interval",
+                            "description": "Диапазон показателя для варианта, указанного в ключе."
+                          },
+                          "description": "Отдельные диапазоны для вариантов стиля. Каждый ключ обозначает вариант, каждое значение содержит его границы."
                         }
-                      ]
+                      ],
+                      "description": "Объёмная доля алкоголя в готовом пиве. Границы выражены в единице units.abv."
                     }
                   },
                   "required": [],
-                  "additionalProperties": false
+                  "additionalProperties": false,
+                  "description": "Опубликованные числовые диапазоны стиля. Пропущенный показатель означает, что в каталоге для него нет числового диапазона."
                 }
               },
               "required": [
@@ -207,8 +247,10 @@
                 "name",
                 "ranges"
               ],
-              "additionalProperties": false
-            }
+              "additionalProperties": false,
+              "description": "Стиль или именованный вариант стиля из руководства BJCP."
+            },
+            "description": "Стили и варианты стилей, отнесённые к этой категории."
           }
         },
         "required": [
@@ -216,8 +258,10 @@
           "name",
           "styles"
         ],
-        "additionalProperties": false
-      }
+        "additionalProperties": false,
+        "description": "Категория стилей в указанной редакции BJCP."
+      },
+      "description": "Категории руководства со списками входящих в них стилей."
     }
   },
   "required": [
@@ -234,26 +278,31 @@
       "type": "object",
       "properties": {
         "min": {
-          "type": "number"
+          "type": "number",
+          "description": "Нижняя граница диапазона BJCP в единице этого показателя."
         },
         "max": {
-          "type": "number"
+          "type": "number",
+          "description": "Верхняя граница диапазона BJCP в единице этого показателя."
         }
       },
       "required": [
         "min",
         "max"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Числовой диапазон показателя стиля."
     },
     "color_interval": {
       "type": "object",
       "properties": {
         "min": {
-          "type": "number"
+          "type": "number",
+          "description": "Нижняя граница диапазона BJCP в единице этого показателя."
         },
         "max": {
-          "type": "number"
+          "type": "number",
+          "description": "Верхняя граница диапазона BJCP в единице этого показателя."
         },
         "varies_by_fruit": {
           "type": "boolean",
@@ -264,7 +313,9 @@
         "min",
         "max"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Диапазон цвета в SRM с возможной отметкой о влиянии фруктов."
     }
-  }
+  },
+  "description": "Каталог категорий и стилей пива BJCP с числовыми ориентирами для рецептов."
 }
