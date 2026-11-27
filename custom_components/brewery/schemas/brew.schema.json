@@ -12,6 +12,11 @@
       "minLength": 1,
       "description": "Стабильный идентификатор конкретной варки."
     },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Момент создания варки и входа в начальный этап закреплённого процесса."
+    },
     "recipe_id": {
       "type": "string",
       "minLength": 1,
@@ -57,6 +62,7 @@
   "required": [
     "schema_version",
     "id",
+    "created_at",
     "recipe_id",
     "recipe_revision",
     "process_version",
@@ -405,5 +411,130 @@
       "unevaluatedProperties": false
     }
   },
-  "description": "Фактические данные одной варки и ссылки на закреплённые рецепт и правила процесса."
+  "description": "Фактические данные одной варки и ссылки на закреплённые рецепт и правила процесса.",
+  "examples": [
+    {
+      "schema_version": 1,
+      "id": "brew_1",
+      "created_at": "2026-11-27T09:00:00+05:00",
+      "recipe_id": "recipe_1",
+      "recipe_revision": 1,
+      "process_version": "1",
+      "journal": [
+        {
+          "id": "entry_1",
+          "stage": "preparation",
+          "occurred_at": "2026-11-27T09:10:00+05:00",
+          "type": "note",
+          "text": "Вода подготовлена"
+        },
+        {
+          "id": "entry_2",
+          "stage": "preparation",
+          "occurred_at": "2026-11-27T09:20:00+05:00",
+          "type": "transition",
+          "to": "mashing"
+        },
+        {
+          "id": "entry_3",
+          "stage": "mashing",
+          "occurred_at": "2026-11-27T09:21:00+05:00",
+          "type": "ingredient_added",
+          "ingredient_kind": "malt",
+          "ingredient": "Pilsner",
+          "amount": {
+            "value": 5,
+            "unit": "kg"
+          },
+          "recipe_item_id": "malt_1"
+        },
+        {
+          "id": "entry_4",
+          "stage": "mashing",
+          "occurred_at": "2026-11-27T10:25:00+05:00",
+          "type": "transition",
+          "to": "lautering"
+        },
+        {
+          "id": "entry_5",
+          "stage": "lautering",
+          "occurred_at": "2026-11-27T10:30:00+05:00",
+          "type": "sparge_water_added",
+          "volume": {
+            "value": 2,
+            "unit": "l"
+          }
+        },
+        {
+          "id": "entry_6",
+          "stage": "lautering",
+          "occurred_at": "2026-11-27T11:15:00+05:00",
+          "type": "transition",
+          "to": "pre_boil"
+        },
+        {
+          "id": "entry_7",
+          "stage": "pre_boil",
+          "occurred_at": "2026-11-27T11:45:00+05:00",
+          "type": "transition",
+          "to": "boil"
+        },
+        {
+          "id": "entry_8",
+          "stage": "boil",
+          "occurred_at": "2026-11-27T11:45:00+05:00",
+          "type": "measurement",
+          "metric": "volume",
+          "checkpoint": "start",
+          "value": {
+            "value": 30,
+            "unit": "l"
+          }
+        },
+        {
+          "id": "entry_9",
+          "stage": "boil",
+          "occurred_at": "2026-11-27T12:45:00+05:00",
+          "type": "transition",
+          "to": "cooling"
+        },
+        {
+          "id": "entry_10",
+          "stage": "cooling",
+          "occurred_at": "2026-11-27T13:15:00+05:00",
+          "type": "transition",
+          "to": "transfer"
+        },
+        {
+          "id": "entry_11",
+          "stage": "transfer",
+          "occurred_at": "2026-11-27T13:20:00+05:00",
+          "type": "transfer",
+          "volume": {
+            "value": 26,
+            "unit": "l"
+          }
+        },
+        {
+          "id": "entry_12",
+          "stage": "transfer",
+          "occurred_at": "2026-11-27T13:21:00+05:00",
+          "type": "measurement",
+          "metric": "volume",
+          "checkpoint": "end",
+          "value": {
+            "value": 1.5,
+            "unit": "l"
+          }
+        },
+        {
+          "id": "entry_13",
+          "stage": "transfer",
+          "occurred_at": "2026-11-27T13:22:00+05:00",
+          "type": "transition",
+          "to": "completed"
+        }
+      ]
+    }
+  ]
 }

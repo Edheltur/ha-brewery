@@ -1,4 +1,4 @@
-"""Validate the bundled brewery catalogs and their cross-references."""
+"""Validate brewery schemas, examples, and bundled catalogs."""
 
 import json
 import math
@@ -150,7 +150,7 @@ def check_catalog_links(catalogs):
 
 
 def main():
-    """Return a nonzero exit status if any catalog check fails."""
+    """Return a nonzero exit status if any validation fails."""
     try:
         validators = load_validators()
         catalogs = {filename: read_json(DATA / filename) for filename in CATALOG_SCHEMAS}
@@ -165,11 +165,17 @@ def main():
     ]
     if not errors:
         errors.extend(check_catalog_links(catalogs))
+    errors.extend(
+        f"{filename}: examples[{index}] {error.json_path}: {error.message}"
+        for filename, validator in validators.items()
+        for index, example in enumerate(validator.schema.get("examples", []))
+        for error in validator.iter_errors(example)
+    )
     if errors:
         print("\n".join(errors), file=sys.stderr)
         return 1
 
-    print(f"Validated {len(catalogs)} catalogs and their local schema references.")
+    print(f"Validated {len(catalogs)} catalogs, schema examples, and local schema references.")
     return 0
 
 
