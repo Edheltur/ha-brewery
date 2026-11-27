@@ -1,0 +1,9 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "description": "Добавить пивоварню в Home Assistant?"
+      }
+    }
+  }
+}

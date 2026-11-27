@@ -1,0 +1,9 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "description": "Add Brewery to Home Assistant?"
+      }
+    }
+  }
+}
