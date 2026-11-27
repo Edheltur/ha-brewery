@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Edheltur/ha-brewery/master/custom_components/brewery/schemas/weights.schema.json",
+  "type": "object",
+  "properties": {
+    "value": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "unit": {
+      "enum": [
+        "mg",
+        "g",
+        "kg",
+        "oz",
+        "lb"
+      ]
+    }
+  },
+  "required": [
+    "value",
+    "unit"
+  ],
+  "additionalProperties": false
+}

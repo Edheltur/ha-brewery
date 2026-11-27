@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Edheltur/ha-brewery/master/custom_components/brewery/schemas/density.schema.json",
+  "type": "object",
+  "properties": {
+    "value": {
+      "type": "number"
+    },
+    "unit": {
+      "enum": [
+        "°Bx"
+      ]
+    }
+  },
+  "required": [
+    "value",
+    "unit"
+  ],
+  "additionalProperties": false
+}

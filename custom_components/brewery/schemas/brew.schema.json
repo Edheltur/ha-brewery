@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ha-brewery.invalid/schemas/brew.schema.json",
+  "$id": "https://raw.githubusercontent.com/Edheltur/ha-brewery/master/custom_components/brewery/schemas/brew.schema.json",
   "type": "object",
   "properties": {
     "schema_version": {
@@ -39,9 +39,6 @@
             "$ref": "#/$defs/boil_end_volume"
           },
           {
-            "$ref": "#/$defs/kettle_remainder"
-          },
-          {
             "$ref": "#/$defs/density_sample"
           },
           {
@@ -61,6 +58,9 @@
           },
           {
             "$ref": "#/$defs/acid_added"
+          },
+          {
+            "$ref": "#/$defs/note"
           }
         ]
       },
@@ -84,7 +84,7 @@
           "const": "transition"
         },
         "to": {
-          "$ref": "common.schema.json#/$defs/name"
+          "$ref": "name.schema.json"
         }
       },
       "required": [
@@ -104,14 +104,18 @@
         "type": {
           "const": "sparge_water_added"
         },
-        "volume_l": {
-          "type": "number",
-          "exclusiveMinimum": 0
+        "volume": {
+          "$ref": "volumes.schema.json",
+          "properties": {
+            "value": {
+              "exclusiveMinimum": 0
+            }
+          }
         }
       },
       "required": [
         "type",
-        "volume_l"
+        "volume"
       ],
       "allOf": [
         {
@@ -126,14 +130,13 @@
         "type": {
           "const": "boil_start_volume"
         },
-        "volume_l": {
-          "type": "number",
-          "minimum": 0
+        "volume": {
+          "$ref": "volumes.schema.json"
         }
       },
       "required": [
         "type",
-        "volume_l"
+        "volume"
       ],
       "allOf": [
         {
@@ -148,36 +151,13 @@
         "type": {
           "const": "boil_end_volume"
         },
-        "volume_l": {
-          "type": "number",
-          "minimum": 0
+        "volume": {
+          "$ref": "volumes.schema.json"
         }
       },
       "required": [
         "type",
-        "volume_l"
-      ],
-      "allOf": [
-        {
-          "$ref": "#/$defs/journal_entry"
-        }
-      ],
-      "unevaluatedProperties": false
-    },
-    "kettle_remainder": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "const": "kettle_remainder"
-        },
-        "volume_l": {
-          "type": "number",
-          "minimum": 0
-        }
-      },
-      "required": [
-        "type",
-        "volume_l"
+        "volume"
       ],
       "allOf": [
         {
@@ -192,22 +172,22 @@
         "type": {
           "const": "density_sample"
         },
-        "value_bx": {
-          "type": "number"
+        "density": {
+          "$ref": "density.schema.json"
         },
         "instrument": {
           "type": "string",
           "minLength": 1
         },
-        "temperature_c": {
-          "type": "number"
+        "temperature": {
+          "$ref": "temperature.schema.json"
         }
       },
       "required": [
         "type",
-        "value_bx",
+        "density",
         "instrument",
-        "temperature_c"
+        "temperature"
       ],
       "allOf": [
         {
@@ -247,9 +227,13 @@
           "type": "string",
           "minLength": 1
         },
-        "volume_l": {
-          "type": "number",
-          "exclusiveMinimum": 0
+        "volume": {
+          "$ref": "volumes.schema.json",
+          "properties": {
+            "value": {
+              "exclusiveMinimum": 0
+            }
+          }
         },
         "fermentation_id": {
           "type": "string",
@@ -259,7 +243,7 @@
       "required": [
         "type",
         "fermenter_id",
-        "volume_l"
+        "volume"
       ],
       "allOf": [
         {
@@ -279,27 +263,7 @@
           "minLength": 1
         },
         "amount": {
-          "type": "object",
-          "properties": {
-            "value": {
-              "type": "number",
-              "exclusiveMinimum": 0
-            },
-            "unit": {
-              "enum": [
-                "mg",
-                "g",
-                "kg",
-                "oz",
-                "lb"
-              ]
-            }
-          },
-          "required": [
-            "value",
-            "unit"
-          ],
-          "additionalProperties": false
+          "$ref": "weights.schema.json"
         },
         "recipe_item_id": {
           "type": "string",
@@ -329,27 +293,7 @@
           "minLength": 1
         },
         "amount": {
-          "type": "object",
-          "properties": {
-            "value": {
-              "type": "number",
-              "exclusiveMinimum": 0
-            },
-            "unit": {
-              "enum": [
-                "mg",
-                "g",
-                "kg",
-                "oz",
-                "lb"
-              ]
-            }
-          },
-          "required": [
-            "value",
-            "unit"
-          ],
-          "additionalProperties": false
+          "$ref": "weights.schema.json"
         },
         "recipe_item_id": {
           "type": "string",
@@ -379,27 +323,7 @@
           "minLength": 1
         },
         "amount": {
-          "type": "object",
-          "properties": {
-            "value": {
-              "type": "number",
-              "exclusiveMinimum": 0
-            },
-            "unit": {
-              "enum": [
-                "mg",
-                "g",
-                "kg",
-                "oz",
-                "lb"
-              ]
-            }
-          },
-          "required": [
-            "value",
-            "unit"
-          ],
-          "additionalProperties": false
+          "$ref": "weights.schema.json"
         },
         "recipe_item_id": {
           "type": "string",
@@ -425,26 +349,25 @@
           "const": "acid_added"
         },
         "ingredient": {
-          "type": "string",
-          "minLength": 1
+          "enum": [
+            "lactic_acid_80_percent",
+            "citric_acid"
+          ]
         },
         "amount": {
-          "type": "object",
-          "properties": {
-            "value": {
-              "type": "number",
-              "exclusiveMinimum": 0
+          "oneOf": [
+            {
+              "$ref": "weights.schema.json"
             },
-            "unit": {
-              "type": "string",
-              "minLength": 1
+            {
+              "$ref": "volumes.schema.json",
+              "properties": {
+                "value": {
+                  "exclusiveMinimum": 0
+                }
+              }
             }
-          },
-          "required": [
-            "value",
-            "unit"
-          ],
-          "additionalProperties": false
+          ]
         },
         "recipe_item_id": {
           "type": "string",
@@ -459,6 +382,37 @@
       "allOf": [
         {
           "$ref": "#/$defs/journal_entry"
+        },
+        {
+          "if": {
+            "properties": {
+              "ingredient": {
+                "const": "citric_acid"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "amount": {
+                "properties": {
+                  "unit": {
+                    "const": "mg"
+                  }
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "amount": {
+                "properties": {
+                  "unit": {
+                    "const": "ml"
+                  }
+                }
+              }
+            }
+          }
         }
       ],
       "unevaluatedProperties": false
@@ -471,12 +425,17 @@
           "minLength": 1
         },
         "stage": {
-          "$ref": "common.schema.json#/$defs/name"
+          "$ref": "name.schema.json"
         },
         "occurred_at": {
           "type": "string",
           "minLength": 1,
           "format": "date-time"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Свободный комментарий пивовара к записи."
         }
       },
       "required": [
@@ -484,6 +443,24 @@
         "stage",
         "occurred_at"
       ]
+    },
+    "note": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "note"
+        }
+      },
+      "required": [
+        "type",
+        "text"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/journal_entry"
+        }
+      ],
+      "unevaluatedProperties": false
     }
   }
 }

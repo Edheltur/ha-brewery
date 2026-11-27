@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ha-brewery.invalid/schemas/process.schema.json",
+  "$id": "https://raw.githubusercontent.com/Edheltur/ha-brewery/master/custom_components/brewery/schemas/process.schema.json",
   "type": "object",
   "properties": {
     "stages": {
@@ -9,7 +9,7 @@
         "type": "object",
         "properties": {
           "name": {
-            "$ref": "common.schema.json#/$defs/name"
+            "$ref": "name.schema.json"
           },
           "title": {
             "type": "string",
@@ -21,34 +21,25 @@
               "type": "object",
               "properties": {
                 "name": {
-                  "$ref": "common.schema.json#/$defs/name"
+                  "$ref": "name.schema.json"
                 },
                 "title": {
                   "type": "string",
                   "minLength": 1
                 },
                 "type": {
-                  "$ref": "common.schema.json#/$defs/name"
+                  "$ref": "name.schema.json"
                 },
                 "target": {
-                  "$ref": "common.schema.json#/$defs/name"
+                  "$ref": "name.schema.json"
                 },
                 "portion": {
-                  "type": "object",
+                  "$ref": "volumes.schema.json",
                   "properties": {
                     "value": {
-                      "type": "number",
                       "exclusiveMinimum": 0
-                    },
-                    "unit": {
-                      "const": "l"
                     }
-                  },
-                  "required": [
-                    "value",
-                    "unit"
-                  ],
-                  "additionalProperties": false
+                  }
                 },
                 "parameters": {
                   "type": "object",
@@ -86,14 +77,14 @@
               "type": "object",
               "properties": {
                 "action": {
-                  "$ref": "common.schema.json#/$defs/name"
+                  "$ref": "name.schema.json"
                 },
                 "title": {
                   "type": "string",
                   "minLength": 1
                 },
                 "to": {
-                  "$ref": "common.schema.json#/$defs/name"
+                  "$ref": "name.schema.json"
                 }
               },
               "required": [
@@ -118,7 +109,7 @@
       "description": "Идентификатор закрепляемой версии правил процесса."
     },
     "initial_stage": {
-      "$ref": "common.schema.json#/$defs/name"
+      "$ref": "name.schema.json"
     }
   },
   "required": [

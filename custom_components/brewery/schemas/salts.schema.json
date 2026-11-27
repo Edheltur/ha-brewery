@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ha-brewery.invalid/schemas/salts.schema.json",
+  "$id": "https://raw.githubusercontent.com/Edheltur/ha-brewery/master/custom_components/brewery/schemas/salts.schema.json",
   "type": "object",
   "properties": {
     "salts": {
@@ -9,7 +9,7 @@
         "type": "object",
         "properties": {
           "name": {
-            "$ref": "common.schema.json#/$defs/name"
+            "$ref": "name.schema.json"
           },
           "title": {
             "type": "string",
@@ -19,10 +19,10 @@
             "type": "string"
           },
           "base_salt_name": {
-            "$ref": "common.schema.json#/$defs/name"
+            "$ref": "name.schema.json"
           },
           "ions_mg_per_g": {
-            "$ref": "common.schema.json#/$defs/ions",
+            "$ref": "ions.schema.json",
             "description": "Мг каждого иона на грамм конкретной формы соли."
           }
         },

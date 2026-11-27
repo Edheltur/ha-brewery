@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ha-brewery.invalid/schemas/bjcp.schema.json",
+  "$id": "https://raw.githubusercontent.com/Edheltur/ha-brewery/master/custom_components/brewery/schemas/bjcp.schema.json",
   "type": "object",
   "properties": {
     "guide": {
@@ -11,7 +11,7 @@
       "type": "integer",
       "minimum": 1
     },
-    "source": {
+    "source_url": {
       "type": "string",
       "minLength": 1,
       "format": "uri"
@@ -149,7 +149,7 @@
                     "srm": {
                       "oneOf": [
                         {
-                          "$ref": "#/$defs/interval"
+                          "$ref": "#/$defs/color_interval"
                         },
                         {
                           "type": "object",
@@ -164,7 +164,7 @@
                             ]
                           },
                           "additionalProperties": {
-                            "$ref": "#/$defs/interval"
+                            "$ref": "#/$defs/color_interval"
                           }
                         }
                       ]
@@ -218,7 +218,7 @@
   "required": [
     "guide",
     "edition",
-    "source",
+    "source_url",
     "copyright",
     "units",
     "categories"
@@ -233,9 +233,26 @@
         },
         "max": {
           "type": "number"
+        }
+      },
+      "required": [
+        "min",
+        "max"
+      ],
+      "additionalProperties": false
+    },
+    "color_interval": {
+      "type": "object",
+      "properties": {
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
         },
         "varies_by_fruit": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Цвет готового пива зависит от использованных фруктов. Указанный диапазон SRM описывает базовый цвет."
         }
       },
       "required": [

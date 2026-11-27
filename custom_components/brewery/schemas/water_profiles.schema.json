@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://ha-brewery.invalid/schemas/water_profiles.schema.json",
+  "$id": "https://raw.githubusercontent.com/Edheltur/ha-brewery/master/custom_components/brewery/schemas/water_profiles.schema.json",
   "type": "object",
   "properties": {
     "bjcp_edition": {
@@ -13,7 +13,7 @@
         "type": "object",
         "properties": {
           "name": {
-            "$ref": "common.schema.json#/$defs/name"
+            "$ref": "name.schema.json"
           },
           "title": {
             "type": "string",
@@ -36,7 +36,7 @@
             "uniqueItems": true
           },
           "ions_mg_per_l": {
-            "$ref": "common.schema.json#/$defs/ions",
+            "$ref": "ions.schema.json",
             "description": "Цели в мг/л. Пропуск снимает цель, ноль задаёт нулевую цель."
           }
         },
