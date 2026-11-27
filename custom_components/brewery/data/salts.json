@@ -53,6 +53,13 @@
         "sodium": 393.4,
         "chloride": 606.6
       }
+    },
+    {
+      "name": "calcium_carbonate",
+      "title": "Карбонат кальция (мел)",
+      "description": "Для мела в обычной воде ионный вклад зависит от растворения и считается неопределённым.",
+      "base_salt_name": "calcium_carbonate",
+      "ions_mg_per_g": null
     }
   ]
 }

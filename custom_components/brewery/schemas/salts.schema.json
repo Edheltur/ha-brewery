@@ -22,8 +22,15 @@
             "$ref": "name.schema.json"
           },
           "ions_mg_per_g": {
-            "$ref": "ions.schema.json",
-            "description": "Мг каждого иона на грамм конкретной формы соли."
+            "anyOf": [
+              {
+                "$ref": "ions.schema.json"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Мг каждого иона на грамм конкретной формы соли. null означает, что вклад этой формы неизвестен в модели водоподготовки."
           }
         },
         "required": [
