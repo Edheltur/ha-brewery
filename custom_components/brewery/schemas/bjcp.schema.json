@@ -24,45 +24,6 @@
       "minLength": 1,
       "description": "Строка об авторских правах на исходное руководство."
     },
-    "units": {
-      "type": "object",
-      "properties": {
-        "og": {
-          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/GravityUnitType",
-          "const": "sg",
-          "description": "Единица начальной плотности сусла (original gravity). Код sg обозначает относительную плотность."
-        },
-        "fg": {
-          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/GravityUnitType",
-          "const": "sg",
-          "description": "Единица конечной плотности пива (final gravity). Код sg обозначает относительную плотность."
-        },
-        "ibu": {
-          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/BitternessUnitType",
-          "const": "IBUs",
-          "description": "Единица горечи. Код IBUs обозначает международные единицы горечи."
-        },
-        "srm": {
-          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/ColorUnitType",
-          "const": "SRM",
-          "description": "Шкала цвета пива Standard Reference Method (SRM)."
-        },
-        "abv": {
-          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/PercentUnitType",
-          "const": "%",
-          "description": "Единица объёмной доли алкоголя. Значение 5 означает 5% об."
-        }
-      },
-      "required": [
-        "og",
-        "fg",
-        "ibu",
-        "srm",
-        "abv"
-      ],
-      "additionalProperties": false,
-      "description": "Коды единиц BeerJSON для всех границ диапазонов в каталоге. Ключ совпадает с именем показателя в ranges."
-    },
     "categories": {
       "type": "array",
       "items": {
@@ -120,7 +81,7 @@
                           "description": "Отдельные диапазоны для вариантов стиля. Каждый ключ обозначает вариант, каждое значение содержит его границы."
                         }
                       ],
-                      "description": "Начальная плотность сусла до брожения. Границы выражены в единице units.og."
+                      "description": "Начальная плотность сусла до брожения в единицах относительной плотности (sg)."
                     },
                     "fg": {
                       "oneOf": [
@@ -148,7 +109,7 @@
                           "description": "Отдельные диапазоны для вариантов стиля. Каждый ключ обозначает вариант, каждое значение содержит его границы."
                         }
                       ],
-                      "description": "Конечная плотность пива после брожения. Границы выражены в единице units.fg."
+                      "description": "Конечная плотность пива после брожения в единицах относительной плотности (sg)."
                     },
                     "ibu": {
                       "oneOf": [
@@ -176,7 +137,7 @@
                           "description": "Отдельные диапазоны для вариантов стиля. Каждый ключ обозначает вариант, каждое значение содержит его границы."
                         }
                       ],
-                      "description": "Горечь пива. Границы выражены в единице units.ibu."
+                      "description": "Горечь пива в международных единицах горечи (IBUs)."
                     },
                     "srm": {
                       "oneOf": [
@@ -204,7 +165,7 @@
                           "description": "Отдельные диапазоны для вариантов стиля. Каждый ключ обозначает вариант, каждое значение содержит его границы."
                         }
                       ],
-                      "description": "Цвет пива. Границы выражены в единице units.srm."
+                      "description": "Цвет пива по шкале Standard Reference Method (SRM)."
                     },
                     "abv": {
                       "oneOf": [
@@ -232,7 +193,7 @@
                           "description": "Отдельные диапазоны для вариантов стиля. Каждый ключ обозначает вариант, каждое значение содержит его границы."
                         }
                       ],
-                      "description": "Объёмная доля алкоголя в готовом пиве. Границы выражены в единице units.abv."
+                      "description": "Объёмная доля алкоголя в процентах. Значение 5 означает 5% об."
                     }
                   },
                   "required": [],
@@ -267,7 +228,6 @@
     "edition",
     "source_url",
     "copyright",
-    "units",
     "categories"
   ],
   "additionalProperties": false,
@@ -277,11 +237,11 @@
       "properties": {
         "min": {
           "type": "number",
-          "description": "Нижняя граница диапазона BJCP в единице этого показателя."
+          "description": "Нижняя граница диапазона в единице, указанной в описании показателя."
         },
         "max": {
           "type": "number",
-          "description": "Верхняя граница диапазона BJCP в единице этого показателя."
+          "description": "Верхняя граница диапазона в единице, указанной в описании показателя."
         }
       },
       "required": [
@@ -296,11 +256,11 @@
       "properties": {
         "min": {
           "type": "number",
-          "description": "Нижняя граница диапазона BJCP в единице этого показателя."
+          "description": "Нижняя граница диапазона цвета в SRM."
         },
         "max": {
           "type": "number",
-          "description": "Верхняя граница диапазона BJCP в единице этого показателя."
+          "description": "Верхняя граница диапазона цвета в SRM."
         },
         "varies_by_fruit": {
           "type": "boolean",

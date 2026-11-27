@@ -3,13 +3,6 @@
   "edition": 2021,
   "source_url": "https://www.bjcp.org/style/guidelines-2021/",
   "copyright": "Copyright 2021, Beer Judge Certification Program, Inc.",
-  "units": {
-    "og": "sg",
-    "fg": "sg",
-    "ibu": "IBUs",
-    "srm": "SRM",
-    "abv": "%"
-  },
   "categories": [
     {
       "code": "1",
