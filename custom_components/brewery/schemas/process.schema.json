@@ -34,7 +34,7 @@
                   "$ref": "name.schema.json"
                 },
                 "portion": {
-                  "$ref": "volumes.schema.json",
+                  "$ref": "units.schema.json#/$defs/volume",
                   "properties": {
                     "value": {
                       "exclusiveMinimum": 0

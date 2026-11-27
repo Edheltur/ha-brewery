@@ -105,7 +105,7 @@
           "const": "sparge_water_added"
         },
         "volume": {
-          "$ref": "volumes.schema.json",
+          "$ref": "units.schema.json#/$defs/volume",
           "properties": {
             "value": {
               "exclusiveMinimum": 0
@@ -131,7 +131,7 @@
           "const": "boil_start_volume"
         },
         "volume": {
-          "$ref": "volumes.schema.json"
+          "$ref": "units.schema.json#/$defs/volume"
         }
       },
       "required": [
@@ -152,7 +152,7 @@
           "const": "boil_end_volume"
         },
         "volume": {
-          "$ref": "volumes.schema.json"
+          "$ref": "units.schema.json#/$defs/volume"
         }
       },
       "required": [
@@ -173,14 +173,14 @@
           "const": "density_sample"
         },
         "density": {
-          "$ref": "density.schema.json"
+          "$ref": "units.schema.json#/$defs/gravity"
         },
         "instrument": {
           "type": "string",
           "minLength": 1
         },
         "temperature": {
-          "$ref": "temperature.schema.json"
+          "$ref": "units.schema.json#/$defs/temperature"
         }
       },
       "required": [
@@ -203,7 +203,7 @@
           "const": "ph_sample"
         },
         "ph": {
-          "type": "number"
+          "$ref": "units.schema.json#/$defs/acidity"
         }
       },
       "required": [
@@ -228,7 +228,7 @@
           "minLength": 1
         },
         "volume": {
-          "$ref": "volumes.schema.json",
+          "$ref": "units.schema.json#/$defs/volume",
           "properties": {
             "value": {
               "exclusiveMinimum": 0
@@ -263,7 +263,7 @@
           "minLength": 1
         },
         "amount": {
-          "$ref": "weights.schema.json"
+          "$ref": "units.schema.json#/$defs/mass"
         },
         "recipe_item_id": {
           "type": "string",
@@ -293,7 +293,7 @@
           "minLength": 1
         },
         "amount": {
-          "$ref": "weights.schema.json"
+          "$ref": "units.schema.json#/$defs/mass"
         },
         "recipe_item_id": {
           "type": "string",
@@ -323,7 +323,7 @@
           "minLength": 1
         },
         "amount": {
-          "$ref": "weights.schema.json"
+          "$ref": "units.schema.json#/$defs/mass"
         },
         "recipe_item_id": {
           "type": "string",
@@ -357,10 +357,10 @@
         "amount": {
           "oneOf": [
             {
-              "$ref": "weights.schema.json"
+              "$ref": "units.schema.json#/$defs/mass"
             },
             {
-              "$ref": "volumes.schema.json",
+              "$ref": "units.schema.json#/$defs/volume",
               "properties": {
                 "value": {
                   "exclusiveMinimum": 0
