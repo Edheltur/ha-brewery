@@ -358,11 +358,6 @@
           "const": "transfer",
           "description": "Тип записи журнала."
         },
-        "fermenter_id": {
-          "type": "string",
-          "minLength": 1,
-          "description": "Идентификатор ферментера назначения."
-        },
         "volume": {
           "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
           "properties": {
@@ -375,12 +370,11 @@
         "fermentation_id": {
           "type": "string",
           "minLength": 1,
-          "description": "Идентификатор связанной ферментации. Поле опускается, пока связь не установлена."
+          "description": "Идентификатор связанного устройства ферментации в ha-fermentation. Поле опускается, пока связь не установлена."
         }
       },
       "required": [
         "type",
-        "fermenter_id",
         "volume"
       ],
       "allOf": [
