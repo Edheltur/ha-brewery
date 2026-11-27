@@ -24,18 +24,23 @@
       "type": "object",
       "properties": {
         "og": {
-          "const": "SG"
+          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/GravityUnitType",
+          "const": "sg"
         },
         "fg": {
-          "const": "SG"
+          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/GravityUnitType",
+          "const": "sg"
         },
         "ibu": {
-          "const": "IBU"
+          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/BitternessUnitType",
+          "const": "IBUs"
         },
         "srm": {
+          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/ColorUnitType",
           "const": "SRM"
         },
         "abv": {
+          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/PercentUnitType",
           "const": "%"
         }
       },

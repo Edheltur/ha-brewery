@@ -105,7 +105,7 @@
           "const": "sparge_water_added"
         },
         "volume": {
-          "$ref": "units.schema.json#/$defs/volume",
+          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
           "properties": {
             "value": {
               "exclusiveMinimum": 0
@@ -131,7 +131,12 @@
           "const": "boil_start_volume"
         },
         "volume": {
-          "$ref": "units.schema.json#/$defs/volume"
+          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
+          "properties": {
+            "value": {
+              "minimum": 0
+            }
+          }
         }
       },
       "required": [
@@ -152,7 +157,12 @@
           "const": "boil_end_volume"
         },
         "volume": {
-          "$ref": "units.schema.json#/$defs/volume"
+          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
+          "properties": {
+            "value": {
+              "minimum": 0
+            }
+          }
         }
       },
       "required": [
@@ -173,14 +183,14 @@
           "const": "density_sample"
         },
         "density": {
-          "$ref": "units.schema.json#/$defs/gravity"
+          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/GravityType"
         },
         "instrument": {
           "type": "string",
           "minLength": 1
         },
         "temperature": {
-          "$ref": "units.schema.json#/$defs/temperature"
+          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/TemperatureType"
         }
       },
       "required": [
@@ -203,7 +213,7 @@
           "const": "ph_sample"
         },
         "ph": {
-          "$ref": "units.schema.json#/$defs/acidity"
+          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/AcidityType"
         }
       },
       "required": [
@@ -228,7 +238,7 @@
           "minLength": 1
         },
         "volume": {
-          "$ref": "units.schema.json#/$defs/volume",
+          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
           "properties": {
             "value": {
               "exclusiveMinimum": 0
@@ -263,7 +273,12 @@
           "minLength": 1
         },
         "amount": {
-          "$ref": "units.schema.json#/$defs/mass"
+          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/MassType",
+          "properties": {
+            "value": {
+              "exclusiveMinimum": 0
+            }
+          }
         },
         "recipe_item_id": {
           "type": "string",
@@ -293,7 +308,12 @@
           "minLength": 1
         },
         "amount": {
-          "$ref": "units.schema.json#/$defs/mass"
+          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/MassType",
+          "properties": {
+            "value": {
+              "exclusiveMinimum": 0
+            }
+          }
         },
         "recipe_item_id": {
           "type": "string",
@@ -323,7 +343,12 @@
           "minLength": 1
         },
         "amount": {
-          "$ref": "units.schema.json#/$defs/mass"
+          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/MassType",
+          "properties": {
+            "value": {
+              "exclusiveMinimum": 0
+            }
+          }
         },
         "recipe_item_id": {
           "type": "string",
@@ -357,10 +382,15 @@
         "amount": {
           "oneOf": [
             {
-              "$ref": "units.schema.json#/$defs/mass"
+              "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/MassType",
+              "properties": {
+                "value": {
+                  "exclusiveMinimum": 0
+                }
+              }
             },
             {
-              "$ref": "units.schema.json#/$defs/volume",
+              "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
               "properties": {
                 "value": {
                   "exclusiveMinimum": 0

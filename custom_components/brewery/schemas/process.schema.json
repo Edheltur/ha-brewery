@@ -34,7 +34,7 @@
                   "$ref": "name.schema.json"
                 },
                 "portion": {
-                  "$ref": "units.schema.json#/$defs/volume",
+                  "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
                   "properties": {
                     "value": {
                       "exclusiveMinimum": 0
