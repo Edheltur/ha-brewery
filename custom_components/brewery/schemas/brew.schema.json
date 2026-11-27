@@ -4,23 +4,28 @@
   "type": "object",
   "properties": {
     "schema_version": {
-      "const": 1
+      "const": 1,
+      "description": "Версия формата документа варки. По ней выбирается схема чтения и при необходимости миграция."
     },
     "id": {
       "type": "string",
-      "minLength": 1
+      "minLength": 1,
+      "description": "Стабильный идентификатор конкретной варки."
     },
     "recipe_id": {
       "type": "string",
-      "minLength": 1
+      "minLength": 1,
+      "description": "Идентификатор рецепта, по которому создана варка."
     },
     "recipe_revision": {
       "type": "integer",
-      "minimum": 1
+      "minimum": 1,
+      "description": "Номер неизменяемой редакции рецепта, закреплённой за варкой."
     },
     "process_version": {
       "type": "string",
-      "minLength": 1
+      "minLength": 1,
+      "description": "Идентификатор версии правил процесса, закреплённой за варкой."
     },
     "journal": {
       "type": "array",
@@ -30,41 +35,23 @@
             "$ref": "#/$defs/transition"
           },
           {
+            "$ref": "#/$defs/measurement"
+          },
+          {
+            "$ref": "#/$defs/ingredient_added"
+          },
+          {
             "$ref": "#/$defs/sparge_water_added"
           },
           {
-            "$ref": "#/$defs/boil_start_volume"
-          },
-          {
-            "$ref": "#/$defs/boil_end_volume"
-          },
-          {
-            "$ref": "#/$defs/density_sample"
-          },
-          {
-            "$ref": "#/$defs/ph_sample"
-          },
-          {
             "$ref": "#/$defs/transfer"
-          },
-          {
-            "$ref": "#/$defs/hop_added"
-          },
-          {
-            "$ref": "#/$defs/malt_added"
-          },
-          {
-            "$ref": "#/$defs/salt_added"
-          },
-          {
-            "$ref": "#/$defs/acid_added"
           },
           {
             "$ref": "#/$defs/note"
           }
         ]
       },
-      "description": "Порядок принятия записей. У перехода stage — исходный этап. Фактическое время определяет порядок показа."
+      "description": "Записи в порядке принятия. Последовательность переходов определяет текущее состояние. Таймлайн сортируется по фактическому времени."
     }
   },
   "required": [
@@ -77,14 +64,48 @@
   ],
   "additionalProperties": false,
   "$defs": {
+    "journal_entry": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Стабильный идентификатор записи в пределах варки."
+        },
+        "stage": {
+          "$ref": "name.schema.json",
+          "description": "Техническое имя этапа, к которому относится запись. Для перехода это исходный этап."
+        },
+        "occurred_at": {
+          "type": "string",
+          "minLength": 1,
+          "format": "date-time",
+          "description": "Момент фактического действия или наблюдения. Может предшествовать моменту внесения записи."
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Свободный комментарий пивовара к записи."
+        }
+      },
+      "required": [
+        "id",
+        "stage",
+        "occurred_at"
+      ],
+      "description": "Контекст, общий для любой записи журнала."
+    },
     "transition": {
+      "description": "Подтверждённая смена этапа процесса.",
       "type": "object",
       "properties": {
         "type": {
-          "const": "transition"
+          "const": "transition",
+          "description": "Тип записи журнала."
         },
         "to": {
-          "$ref": "name.schema.json"
+          "$ref": "name.schema.json",
+          "description": "Техническое имя этапа после перехода."
         }
       },
       "required": [
@@ -98,11 +119,219 @@
       ],
       "unevaluatedProperties": false
     },
-    "sparge_water_added": {
+    "measurement": {
+      "description": "Фактический замер на этапе варки.",
       "type": "object",
       "properties": {
         "type": {
-          "const": "sparge_water_added"
+          "const": "measurement",
+          "description": "Тип записи журнала."
+        },
+        "metric": {
+          "enum": [
+            "volume",
+            "density",
+            "ph"
+          ],
+          "description": "Измеряемая величина. Определяет единицы и обязательный контекст замера."
+        },
+        "value": {
+          "description": "Исходное показание в виде значения и единицы BeerJSON."
+        }
+      },
+      "required": [
+        "type",
+        "metric",
+        "value"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/journal_entry"
+        }
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "metric": {
+              "const": "volume",
+              "description": "Величина, которую измерили в этой записи."
+            },
+            "value": {
+              "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
+              "properties": {
+                "value": {
+                  "minimum": 0
+                }
+              },
+              "description": "Измеренный объём сусла в котле."
+            },
+            "checkpoint": {
+              "enum": [
+                "start",
+                "end"
+              ],
+              "description": "Точка этапа, к которой относится замер объёма. start соответствует началу, end соответствует завершению этапа."
+            }
+          },
+          "required": [
+            "checkpoint"
+          ]
+        },
+        {
+          "properties": {
+            "metric": {
+              "const": "density",
+              "description": "Величина, которую измерили в этой записи."
+            },
+            "value": {
+              "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/GravityType",
+              "description": "Исходное показание плотности в шкале прибора."
+            },
+            "instrument": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Прибор, которым измерили плотность, например рефрактометр."
+            },
+            "temperature": {
+              "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/TemperatureType",
+              "description": "Температура пробы в момент измерения плотности."
+            }
+          },
+          "required": [
+            "instrument",
+            "temperature"
+          ]
+        },
+        {
+          "properties": {
+            "metric": {
+              "const": "ph",
+              "description": "Величина, которую измерили в этой записи."
+            },
+            "value": {
+              "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/AcidityType",
+              "description": "Измеренное значение pH пробы."
+            }
+          },
+          "required": []
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "ingredient_added": {
+      "description": "Фактическое внесение ингредиента.",
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "ingredient_added",
+          "description": "Тип записи журнала."
+        },
+        "ingredient_kind": {
+          "enum": [
+            "hop",
+            "malt",
+            "salt",
+            "acid"
+          ],
+          "description": "Вид ингредиента. Определяет допустимую величину навески и правила для формы кислоты."
+        },
+        "ingredient": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Название или код фактически использованного ингредиента. Для кислоты используется код конкретной формы."
+        },
+        "amount": {
+          "description": "Положительная масса или объём фактического внесения в единицах BeerJSON."
+        },
+        "recipe_item_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Идентификатор позиции закреплённой редакции рецепта. Для внепланового внесения поле опускается."
+        }
+      },
+      "required": [
+        "type",
+        "ingredient_kind",
+        "ingredient",
+        "amount"
+      ],
+      "allOf": [
+        {
+          "$ref": "#/$defs/journal_entry"
+        },
+        {
+          "if": {
+            "properties": {
+              "ingredient_kind": {
+                "const": "acid"
+              }
+            }
+          },
+          "then": {
+            "oneOf": [
+              {
+                "properties": {
+                  "ingredient": {
+                    "const": "citric_acid"
+                  },
+                  "amount": {
+                    "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/MassType",
+                    "properties": {
+                      "value": {
+                        "exclusiveMinimum": 0
+                      },
+                      "unit": {
+                        "const": "mg",
+                        "description": "Единица дозировки этой формы кислоты."
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "ingredient": {
+                    "const": "lactic_acid_80_percent"
+                  },
+                  "amount": {
+                    "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
+                    "properties": {
+                      "value": {
+                        "exclusiveMinimum": 0
+                      },
+                      "unit": {
+                        "const": "ml",
+                        "description": "Единица дозировки этой формы кислоты."
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "else": {
+            "properties": {
+              "amount": {
+                "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/MassType",
+                "properties": {
+                  "value": {
+                    "exclusiveMinimum": 0
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "sparge_water_added": {
+      "description": "Фактическая порция воды, добавленная при промывке.",
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "sparge_water_added",
+          "description": "Тип записи журнала."
         },
         "volume": {
           "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
@@ -110,115 +339,13 @@
             "value": {
               "exclusiveMinimum": 0
             }
-          }
+          },
+          "description": "Положительный объём внесённой порции. Сумма порций даёт прогресс промывки."
         }
       },
       "required": [
         "type",
         "volume"
-      ],
-      "allOf": [
-        {
-          "$ref": "#/$defs/journal_entry"
-        }
-      ],
-      "unevaluatedProperties": false
-    },
-    "boil_start_volume": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "const": "boil_start_volume"
-        },
-        "volume": {
-          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
-          "properties": {
-            "value": {
-              "minimum": 0
-            }
-          }
-        }
-      },
-      "required": [
-        "type",
-        "volume"
-      ],
-      "allOf": [
-        {
-          "$ref": "#/$defs/journal_entry"
-        }
-      ],
-      "unevaluatedProperties": false
-    },
-    "boil_end_volume": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "const": "boil_end_volume"
-        },
-        "volume": {
-          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
-          "properties": {
-            "value": {
-              "minimum": 0
-            }
-          }
-        }
-      },
-      "required": [
-        "type",
-        "volume"
-      ],
-      "allOf": [
-        {
-          "$ref": "#/$defs/journal_entry"
-        }
-      ],
-      "unevaluatedProperties": false
-    },
-    "density_sample": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "const": "density_sample"
-        },
-        "density": {
-          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/GravityType"
-        },
-        "instrument": {
-          "type": "string",
-          "minLength": 1
-        },
-        "temperature": {
-          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/TemperatureType"
-        }
-      },
-      "required": [
-        "type",
-        "density",
-        "instrument",
-        "temperature"
-      ],
-      "allOf": [
-        {
-          "$ref": "#/$defs/journal_entry"
-        }
-      ],
-      "unevaluatedProperties": false
-    },
-    "ph_sample": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "const": "ph_sample"
-        },
-        "ph": {
-          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/AcidityType"
-        }
-      },
-      "required": [
-        "type",
-        "ph"
       ],
       "allOf": [
         {
@@ -228,14 +355,17 @@
       "unevaluatedProperties": false
     },
     "transfer": {
+      "description": "Перелив охлаждённого сусла в ферментер.",
       "type": "object",
       "properties": {
         "type": {
-          "const": "transfer"
+          "const": "transfer",
+          "description": "Тип записи журнала."
         },
         "fermenter_id": {
           "type": "string",
-          "minLength": 1
+          "minLength": 1,
+          "description": "Идентификатор ферментера назначения."
         },
         "volume": {
           "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
@@ -243,11 +373,13 @@
             "value": {
               "exclusiveMinimum": 0
             }
-          }
+          },
+          "description": "Фактический положительный объём, отправленный в ферментер."
         },
         "fermentation_id": {
           "type": "string",
-          "minLength": 1
+          "minLength": 1,
+          "description": "Идентификатор связанной ферментации. Поле опускается, пока связь не установлена."
         }
       },
       "required": [
@@ -262,223 +394,13 @@
       ],
       "unevaluatedProperties": false
     },
-    "hop_added": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "const": "hop_added"
-        },
-        "ingredient": {
-          "type": "string",
-          "minLength": 1
-        },
-        "amount": {
-          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/MassType",
-          "properties": {
-            "value": {
-              "exclusiveMinimum": 0
-            }
-          }
-        },
-        "recipe_item_id": {
-          "type": "string",
-          "minLength": 1
-        }
-      },
-      "required": [
-        "type",
-        "ingredient",
-        "amount"
-      ],
-      "allOf": [
-        {
-          "$ref": "#/$defs/journal_entry"
-        }
-      ],
-      "unevaluatedProperties": false
-    },
-    "malt_added": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "const": "malt_added"
-        },
-        "ingredient": {
-          "type": "string",
-          "minLength": 1
-        },
-        "amount": {
-          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/MassType",
-          "properties": {
-            "value": {
-              "exclusiveMinimum": 0
-            }
-          }
-        },
-        "recipe_item_id": {
-          "type": "string",
-          "minLength": 1
-        }
-      },
-      "required": [
-        "type",
-        "ingredient",
-        "amount"
-      ],
-      "allOf": [
-        {
-          "$ref": "#/$defs/journal_entry"
-        }
-      ],
-      "unevaluatedProperties": false
-    },
-    "salt_added": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "const": "salt_added"
-        },
-        "ingredient": {
-          "type": "string",
-          "minLength": 1
-        },
-        "amount": {
-          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/MassType",
-          "properties": {
-            "value": {
-              "exclusiveMinimum": 0
-            }
-          }
-        },
-        "recipe_item_id": {
-          "type": "string",
-          "minLength": 1
-        }
-      },
-      "required": [
-        "type",
-        "ingredient",
-        "amount"
-      ],
-      "allOf": [
-        {
-          "$ref": "#/$defs/journal_entry"
-        }
-      ],
-      "unevaluatedProperties": false
-    },
-    "acid_added": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "const": "acid_added"
-        },
-        "ingredient": {
-          "enum": [
-            "lactic_acid_80_percent",
-            "citric_acid"
-          ]
-        },
-        "amount": {
-          "oneOf": [
-            {
-              "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/MassType",
-              "properties": {
-                "value": {
-                  "exclusiveMinimum": 0
-                }
-              }
-            },
-            {
-              "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
-              "properties": {
-                "value": {
-                  "exclusiveMinimum": 0
-                }
-              }
-            }
-          ]
-        },
-        "recipe_item_id": {
-          "type": "string",
-          "minLength": 1
-        }
-      },
-      "required": [
-        "type",
-        "ingredient",
-        "amount"
-      ],
-      "allOf": [
-        {
-          "$ref": "#/$defs/journal_entry"
-        },
-        {
-          "if": {
-            "properties": {
-              "ingredient": {
-                "const": "citric_acid"
-              }
-            }
-          },
-          "then": {
-            "properties": {
-              "amount": {
-                "properties": {
-                  "unit": {
-                    "const": "mg"
-                  }
-                }
-              }
-            }
-          },
-          "else": {
-            "properties": {
-              "amount": {
-                "properties": {
-                  "unit": {
-                    "const": "ml"
-                  }
-                }
-              }
-            }
-          }
-        }
-      ],
-      "unevaluatedProperties": false
-    },
-    "journal_entry": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "stage": {
-          "$ref": "name.schema.json"
-        },
-        "occurred_at": {
-          "type": "string",
-          "minLength": 1,
-          "format": "date-time"
-        },
-        "text": {
-          "type": "string",
-          "minLength": 1,
-          "description": "Свободный комментарий пивовара к записи."
-        }
-      },
-      "required": [
-        "id",
-        "stage",
-        "occurred_at"
-      ]
-    },
     "note": {
+      "description": "Самостоятельная текстовая заметка пивовара.",
       "type": "object",
       "properties": {
         "type": {
-          "const": "note"
+          "const": "note",
+          "description": "Тип записи журнала."
         }
       },
       "required": [
@@ -492,5 +414,6 @@
       ],
       "unevaluatedProperties": false
     }
-  }
+  },
+  "description": "Фактические данные одной варки и ссылки на закреплённые рецепт и правила процесса."
 }
