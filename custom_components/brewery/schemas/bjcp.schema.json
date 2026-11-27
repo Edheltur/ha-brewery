@@ -84,9 +84,7 @@
               "type": "object",
               "properties": {
                 "code": {
-                  "type": "string",
-                  "minLength": 1,
-                  "description": "Код стиля в редакции BJCP, например 25B. У нескольких именованных вариантов может быть общий код."
+                  "$ref": "#/$defs/style_code"
                 },
                 "name": {
                   "type": "string",
@@ -315,6 +313,11 @@
       ],
       "additionalProperties": false,
       "description": "Диапазон цвета в SRM с возможной отметкой о влиянии фруктов."
+    },
+    "style_code": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Код стиля в редакции BJCP, например 25B. У нескольких именованных вариантов может быть общий код."
     }
   },
   "description": "Каталог категорий и стилей пива BJCP с числовыми ориентирами для рецептов."

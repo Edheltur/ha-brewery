@@ -5,7 +5,8 @@
   "properties": {
     "bjcp_edition": {
       "type": "integer",
-      "minimum": 1
+      "minimum": 1,
+      "description": "Редакция каталога BJCP, в которой определены коды стилей профилей воды."
     },
     "profiles": {
       "type": "array",
@@ -30,10 +31,10 @@
           "bjpc_styles": {
             "type": "array",
             "items": {
-              "type": "string",
-              "minLength": 1
+              "$ref": "bjcp.schema.json#/$defs/style_code"
             },
-            "uniqueItems": true
+            "uniqueItems": true,
+            "description": "Коды подходящих стилей из каталога BJCP указанной редакции. Существование кода проверяется по данным каталога. Пустой список означает, что конкретные стили не указаны."
           },
           "ions_mg_per_l": {
             "$ref": "ions.schema.json",
