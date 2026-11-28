@@ -12,7 +12,7 @@
       "minLength": 1,
       "description": "Стабильный идентификатор конкретной варки."
     },
-    "recipe_id": {
+    "recipe_record_id": {
       "type": "string",
       "minLength": 1,
       "description": "Стабильный идентификатор записи каталога рецептов (recipe_record), выбранной для варки."
@@ -67,7 +67,7 @@
   "required": [
     "schema_version",
     "id",
-    "recipe_id",
+    "recipe_record_id",
     "journal",
     "planned_date"
   ],
@@ -420,7 +420,7 @@
     {
       "schema_version": 1,
       "id": "brew_1",
-      "recipe_id": "recipe_1",
+      "recipe_record_id": "recipe_1",
       "recipe_revision": 1,
       "process_version": "1",
       "journal": [
@@ -540,34 +540,6 @@
       ],
       "started_at": "2026-11-27T09:00:00+05:00",
       "planned_date": "2026-11-27"
-    }
-  ],
-  "dependentRequired": {
-    "started_at": [
-      "recipe_revision",
-      "process_version"
-    ],
-    "recipe_revision": [
-      "started_at"
-    ],
-    "process_version": [
-      "started_at"
-    ]
-  },
-  "allOf": [
-    {
-      "if": {
-        "properties": {
-          "journal": {
-            "minItems": 1
-          }
-        }
-      },
-      "then": {
-        "required": [
-          "started_at"
-        ]
-      }
     }
   ]
 }

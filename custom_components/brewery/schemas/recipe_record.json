@@ -10,7 +10,7 @@
     "id": {
       "type": "string",
       "minLength": 1,
-      "description": "Стабильный идентификатор записи каталога, на который ссылается recipe_id варки."
+      "description": "Стабильный идентификатор записи каталога, на который ссылается recipe_record_id варки."
     },
     "draft": {
       "$ref": "#/$defs/content"

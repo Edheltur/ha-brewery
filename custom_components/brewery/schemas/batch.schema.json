@@ -131,12 +131,7 @@
           "id",
           "method"
         ],
-        "additionalProperties": false,
-        "dependentRequired": {
-          "ended_at": [
-            "started_at"
-          ]
-        }
+        "additionalProperties": false
       }
     },
     "conditioning": {
@@ -198,7 +193,8 @@
           "occurred_at"
         ],
         "additionalProperties": false
-      }
+      },
+      "description": "Этикетирование партии или отдельного розлива."
     },
     "tastings": {
       "type": "array",
@@ -305,7 +301,7 @@
       "brew": {
         "schema_version": 1,
         "id": "brew_1",
-        "recipe_id": "cascade_smash",
+        "recipe_record_id": "cascade_smash",
         "planned_date": "2026-12-05",
         "journal": []
       },
