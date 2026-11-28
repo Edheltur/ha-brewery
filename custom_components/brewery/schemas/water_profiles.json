@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/Edheltur/ha-brewery/master/custom_components/brewery/schemas/water_profiles.schema.json",
+  "$id": "https://raw.githubusercontent.com/Edheltur/ha-brewery/master/custom_components/brewery/schemas/water_profiles.json",
   "type": "object",
   "properties": {
     "bjcp_edition": {
@@ -14,7 +14,7 @@
         "type": "object",
         "properties": {
           "name": {
-            "$ref": "name.schema.json"
+            "$ref": "name.json"
           },
           "title": {
             "type": "string",
@@ -31,7 +31,7 @@
           "bjpc_styles": {
             "type": "array",
             "items": {
-              "$ref": "bjcp.schema.json#/$defs/style_code"
+              "$ref": "bjcp.json#/$defs/style_code"
             },
             "uniqueItems": true,
             "description": "Коды подходящих стилей из каталога BJCP указанной редакции. Существование кода проверяется по данным каталога. Пустой список означает, что конкретные стили не указаны."
@@ -45,7 +45,7 @@
                 "description": "Единица концентрации для всех значений этого профиля."
               },
               "values": {
-                "$ref": "ions.schema.json",
+                "$ref": "ions.json",
                 "description": "Цели по ионам. Пропуск означает незаданную цель. Явный ноль задаёт нулевую цель."
               }
             },

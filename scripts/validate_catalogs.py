@@ -16,9 +16,9 @@ PACKAGE = Path(os.environ.get("BREWERY_PACKAGE_DIR", ROOT / "dist" / "brewery"))
 SCHEMAS = PACKAGE / "schemas"
 DATA = PACKAGE / "data"
 CATALOG_SCHEMAS = {
-    "bjcp-2021.json": "bjcp.schema.json",
-    "water_profiles.json": "water_profiles.schema.json",
-    "salts.json": "salts.schema.json",
+    "bjcp-2021.json": "bjcp.json",
+    "water_profiles.json": "water_profiles.json",
+    "salts.json": "salts.json",
 }
 
 

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/Edheltur/ha-brewery/master/custom_components/brewery/schemas/brew.schema.json",
+  "$id": "https://raw.githubusercontent.com/Edheltur/ha-brewery/master/custom_components/brewery/schemas/brew.json",
   "type": "object",
   "properties": {
     "schema_version": {
@@ -82,7 +82,7 @@
           "description": "Стабильный идентификатор записи в пределах варки."
         },
         "stage": {
-          "$ref": "name.schema.json",
+          "$ref": "name.json",
           "description": "Техническое имя этапа, к которому относится запись. Для перехода это исходный этап."
         },
         "occurred_at": {
@@ -113,7 +113,7 @@
           "description": "Тип записи журнала."
         },
         "to": {
-          "$ref": "name.schema.json",
+          "$ref": "name.json",
           "description": "Техническое имя этапа после перехода."
         }
       },

@@ -57,7 +57,7 @@
               "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/ConcentrationUnitType"
             },
             "values": {
-              "$ref": "ions.schema.json"
+              "$ref": "ions.json"
             }
           },
           "required": [

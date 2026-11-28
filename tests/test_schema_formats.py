@@ -14,23 +14,23 @@ class SchemaFormatsTest(unittest.TestCase):
     def test_rejects_invalid_profile_source_uri(self):
         profiles = read_json(DATA / "water_profiles.json")
         profiles["profiles"][0]["source_url"] = "not a URL"
-        self.assertFalse(self.validators["water_profiles.schema.json"].is_valid(profiles))
+        self.assertFalse(self.validators["water_profiles.json"].is_valid(profiles))
 
     def test_rejects_invalid_journal_timestamp(self):
-        validator = self.validators["brew.schema.json"]
+        validator = self.validators["brew.json"]
         brew = deepcopy(validator.schema["examples"][0])
         brew["journal"][0]["occurred_at"] = "yesterday"
         self.assertFalse(validator.is_valid(brew))
 
     def test_rejects_invalid_start_timestamp(self):
-        validator = self.validators["brew.schema.json"]
+        validator = self.validators["brew.json"]
         brew = {**validator.schema["examples"][0], "journal": []}
         self.assertTrue(validator.is_valid(brew))
         brew["started_at"] = "yesterday"
         self.assertFalse(validator.is_valid(brew))
 
     def test_planned_start_requires_time_and_offset(self):
-        validator = self.validators["batch.schema.json"]
+        validator = self.validators["batch.json"]
         for target in ("brew", "packaging"):
             for value in ("2026-12-05", "2026-12-05T10:00:00"):
                 with self.subTest(target=target, value=value):

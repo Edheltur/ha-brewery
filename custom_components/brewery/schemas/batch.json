@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/Edheltur/ha-brewery/master/custom_components/brewery/schemas/batch.schema.json",
+  "$id": "https://raw.githubusercontent.com/Edheltur/ha-brewery/master/custom_components/brewery/schemas/batch.json",
   "description": "Партия от планирования варочного дня до дегустаций отдельных розливов. Пропуск scope означает всю партию.",
   "type": "object",
   "properties": {
@@ -12,7 +12,7 @@
       "minLength": 1
     },
     "brew": {
-      "$ref": "brew.schema.json"
+      "$ref": "brew.json"
     },
     "clarifications": {
       "type": "object",
@@ -50,7 +50,7 @@
             "pattern": "^/ingredients/miscellaneous_additions/(0|[1-9][0-9]*)$"
           },
           "additionalProperties": {
-            "$ref": "name.schema.json"
+            "$ref": "name.json"
           }
         }
       },
@@ -220,7 +220,7 @@
           "answers": {
             "type": "object",
             "propertyNames": {
-              "$ref": "name.schema.json"
+              "$ref": "name.json"
             },
             "additionalProperties": {
               "type": [
