@@ -43,15 +43,6 @@
         },
         "use_prechiller": {
           "type": "boolean"
-        },
-        "salt_forms": {
-          "type": "object",
-          "propertyNames": {
-            "pattern": "^/ingredients/miscellaneous_additions/(0|[1-9][0-9]*)$"
-          },
-          "additionalProperties": {
-            "$ref": "name.json"
-          }
         }
       },
       "required": [],
