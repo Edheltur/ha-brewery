@@ -73,7 +73,7 @@ def check_references(node, resolver, location):
 def load_validators():
     """Load Draft 2020-12 schemas without a network retrieval callback."""
     paths = sorted(SCHEMAS.glob("*.schema.json"))
-    paths.append(SCHEMAS / "vendor" / "beerjson" / "measureable_units.json")
+    paths.extend(sorted((SCHEMAS / "vendor" / "beerjson").glob("*.json")))
     schemas = {path: read_json(path) for path in paths}
     registry = Registry()
     ids = set()

@@ -22,11 +22,11 @@ class SchemaFormatsTest(unittest.TestCase):
         brew["journal"][0]["occurred_at"] = "yesterday"
         self.assertFalse(validator.is_valid(brew))
 
-    def test_initial_stage_requires_creation_timestamp(self):
+    def test_active_brew_requires_start_timestamp(self):
         validator = self.validators["brew.schema.json"]
         brew = {**validator.schema["examples"][0], "journal": []}
         self.assertTrue(validator.is_valid(brew))
-        brew["created_at"] = "yesterday"
+        brew["started_at"] = "yesterday"
         self.assertFalse(validator.is_valid(brew))
-        del brew["created_at"]
+        del brew["started_at"]
         self.assertFalse(validator.is_valid(brew))

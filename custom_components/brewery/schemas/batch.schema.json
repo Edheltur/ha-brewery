@@ -1,0 +1,331 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Edheltur/ha-brewery/master/custom_components/brewery/schemas/batch.schema.json",
+  "description": "Партия от планирования варочного дня до дегустаций отдельных розливов. Пропуск scope означает всю партию.",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "brew": {
+      "$ref": "brew.schema.json"
+    },
+    "clarifications": {
+      "type": "object",
+      "properties": {
+        "mash_volume": {
+          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
+          "properties": {
+            "value": {
+              "minimum": 0
+            }
+          }
+        },
+        "sparge_volume": {
+          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
+          "properties": {
+            "value": {
+              "minimum": 0
+            }
+          }
+        },
+        "sparge_reserve": {
+          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
+          "properties": {
+            "value": {
+              "minimum": 0
+            }
+          }
+        },
+        "use_prechiller": {
+          "type": "boolean"
+        },
+        "salt_forms": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^/ingredients/miscellaneous_additions/(0|[1-9][0-9]*)$"
+          },
+          "additionalProperties": {
+            "$ref": "name.schema.json"
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "packagings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope": {
+            "type": "object",
+            "properties": {
+              "transfer_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "transfer_ids"
+            ],
+            "additionalProperties": false
+          },
+          "planned_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "started_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "planned_date"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "carbonations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope": {
+            "$ref": "#/$defs/scope"
+          },
+          "method": {
+            "enum": [
+              "priming",
+              "forced"
+            ]
+          },
+          "started_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ended_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "method"
+        ],
+        "additionalProperties": false,
+        "dependentRequired": {
+          "ended_at": [
+            "started_at"
+          ]
+        }
+      }
+    },
+    "conditioning": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope": {
+            "$ref": "#/$defs/scope"
+          },
+          "started_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ended_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "started_at"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "labelings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope": {
+            "$ref": "#/$defs/scope"
+          },
+          "occurred_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "photos": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true,
+            "description": "Стабильные локальные ссылки на фотографии."
+          }
+        },
+        "required": [
+          "id",
+          "occurred_at"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "tastings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope": {
+            "$ref": "#/$defs/scope"
+          },
+          "occurred_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "questionnaire": {
+            "type": "string",
+            "minLength": 1
+          },
+          "answers": {
+            "type": "object",
+            "propertyNames": {
+              "$ref": "name.schema.json"
+            },
+            "additionalProperties": {
+              "type": [
+                "string",
+                "number",
+                "boolean"
+              ]
+            }
+          },
+          "photos": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true,
+            "description": "Стабильные локальные ссылки на фотографии."
+          }
+        },
+        "required": [
+          "id",
+          "occurred_at",
+          "questionnaire",
+          "answers"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "id",
+    "brew"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "scope": {
+      "type": "object",
+      "properties": {
+        "transfer_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "packaging_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "required": [
+            "transfer_ids"
+          ]
+        },
+        {
+          "required": [
+            "packaging_ids"
+          ]
+        }
+      ]
+    }
+  },
+  "examples": [
+    {
+      "schema_version": 1,
+      "id": "batch_1",
+      "brew": {
+        "schema_version": 1,
+        "id": "brew_1",
+        "recipe_id": "cascade_smash",
+        "planned_date": "2026-12-05",
+        "journal": []
+      },
+      "clarifications": {
+        "use_prechiller": true,
+        "sparge_volume": {
+          "value": 9,
+          "unit": "l"
+        },
+        "sparge_reserve": {
+          "value": 2,
+          "unit": "l"
+        }
+      },
+      "packagings": [
+        {
+          "id": "bottles",
+          "planned_date": "2026-12-26"
+        }
+      ]
+    }
+  ]
+}
