@@ -131,10 +131,10 @@ def check_catalog_links(catalogs):
             f"{profiles['bjcp_edition']} does not match catalog edition {bjcp['edition']}"
         )
     for index, profile in enumerate(profiles["profiles"]):
-        for code_index, code in enumerate(profile["bjpc_styles"]):
+        for code_index, code in enumerate(profile["bjcp_styles"]):
             if code not in codes:
                 yield (
-                    f"water_profiles.json: profiles[{index}].bjpc_styles[{code_index}]: "
+                    f"water_profiles.json: profiles[{index}].bjcp_styles[{code_index}]: "
                     f"unknown code {code!r} in BJCP {bjcp['edition']}"
                 )
 

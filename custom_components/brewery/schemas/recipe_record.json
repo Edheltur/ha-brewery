@@ -48,7 +48,8 @@
       "type": "object",
       "properties": {
         "recipe": {
-          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/recipe.json#/$defs/RecipeType"
+          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/recipe.json#/$defs/RecipeType",
+          "description": "Рабочая рецептура BeerJSON. Повторный импорт заменяет только это поле черновика."
         },
         "target_ions": {
           "type": "object",

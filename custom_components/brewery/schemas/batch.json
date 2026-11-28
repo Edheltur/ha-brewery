@@ -17,30 +17,6 @@
     "clarifications": {
       "type": "object",
       "properties": {
-        "mash_volume": {
-          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
-          "properties": {
-            "value": {
-              "minimum": 0
-            }
-          }
-        },
-        "sparge_volume": {
-          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
-          "properties": {
-            "value": {
-              "minimum": 0
-            }
-          }
-        },
-        "sparge_reserve": {
-          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
-          "properties": {
-            "value": {
-              "minimum": 0
-            }
-          }
-        },
         "use_prechiller": {
           "type": "boolean"
         }
@@ -239,6 +215,68 @@
         ],
         "additionalProperties": false
       }
+    },
+    "water_plan": {
+      "type": "object",
+      "description": "План подготовки воды конкретной партии. При старте варки закрепляется вместе с редакцией рецепта.",
+      "properties": {
+        "mash_water_volume": {
+          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
+          "properties": {
+            "value": {
+              "minimum": 0
+            }
+          }
+        },
+        "sparge_water_volume": {
+          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
+          "properties": {
+            "value": {
+              "minimum": 0
+            }
+          }
+        },
+        "sparge_water_reserve_volume": {
+          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
+          "properties": {
+            "value": {
+              "minimum": 0
+            }
+          }
+        },
+        "salt_additions": {
+          "type": "object",
+          "description": "Принятые навески по name формы из salts.json. Пустой объект означает принятую подготовку без солей. Поле отсутствует до принятия расчёта.",
+          "propertyNames": {
+            "$ref": "name.json"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "mash": {
+                "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/MassType",
+                "properties": {
+                  "value": {
+                    "exclusiveMinimum": 0
+                  }
+                }
+              },
+              "sparge": {
+                "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/MassType",
+                "properties": {
+                  "value": {
+                    "exclusiveMinimum": 0
+                  }
+                }
+              }
+            },
+            "minProperties": 1,
+            "additionalProperties": false,
+            "description": "Массы для заторной и подготовленной промывной воды соответственно. Указываются только положительные навески."
+          }
+        }
+      },
+      "additionalProperties": false
     }
   },
   "required": [
@@ -298,22 +336,40 @@
         "journal": []
       },
       "clarifications": {
-        "use_prechiller": true,
-        "sparge_volume": {
-          "value": 9,
-          "unit": "l"
-        },
-        "sparge_reserve": {
-          "value": 2,
-          "unit": "l"
-        }
+        "use_prechiller": true
       },
       "packagings": [
         {
           "id": "bottles",
           "planned_at": "2026-12-26T10:00:00+05:00"
         }
-      ]
+      ],
+      "water_plan": {
+        "mash_water_volume": {
+          "value": 20,
+          "unit": "l"
+        },
+        "sparge_water_volume": {
+          "value": 9,
+          "unit": "l"
+        },
+        "sparge_water_reserve_volume": {
+          "value": 2,
+          "unit": "l"
+        },
+        "salt_additions": {
+          "calcium_chloride_dihydrate": {
+            "mash": {
+              "value": 4,
+              "unit": "g"
+            },
+            "sparge": {
+              "value": 2.2,
+              "unit": "g"
+            }
+          }
+        }
+      }
     }
   ]
 }

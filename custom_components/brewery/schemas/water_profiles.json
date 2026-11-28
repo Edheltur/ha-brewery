@@ -28,7 +28,7 @@
             "minLength": 1,
             "format": "uri"
           },
-          "bjpc_styles": {
+          "bjcp_styles": {
             "type": "array",
             "items": {
               "$ref": "bjcp.json#/$defs/style_code"
@@ -60,7 +60,7 @@
           "name",
           "title",
           "source_url",
-          "bjpc_styles",
+          "bjcp_styles",
           "ions"
         ],
         "additionalProperties": false

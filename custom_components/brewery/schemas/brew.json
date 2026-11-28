@@ -241,15 +241,15 @@
         "ingredient": {
           "type": "string",
           "minLength": 1,
-          "description": "Название или код фактически использованного ингредиента. Для кислоты используется код конкретной формы."
+          "description": "Название или код фактически внесённого ингредиента. Для соли из плана партии используется name формы из salts.json, для кислоты — код конкретной формы."
         },
         "amount": {
           "description": "Положительная масса или объём фактического внесения в единицах BeerJSON."
         },
-        "recipe_item_id": {
+        "recipe_item_pointer": {
           "type": "string",
           "minLength": 1,
-          "description": "Идентификатор позиции закреплённой редакции рецепта. Для внепланового внесения поле опускается.",
+          "description": "JSON Pointer от корня recipe закреплённой редакции. Поле указывается только при ссылке на позицию рецептуры.",
           "pattern": "^/ingredients/(fermentable|hop|miscellaneous)_additions/(0|[1-9][0-9]*)$"
         }
       },
@@ -377,10 +377,10 @@
           },
           "description": "Фактический положительный объём, отправленный в ферментер."
         },
-        "fermentation_id": {
+        "fermentation_device_id": {
           "type": "string",
           "minLength": 1,
-          "description": "Идентификатор связанного устройства ферментации в ha-fermentation. Поле опускается, пока связь не установлена."
+          "description": "ID устройства из реестра устройств Home Assistant для связанной ферментации в ha-fermentation. Поле опускается, пока связь не установлена."
         }
       },
       "required": [
@@ -449,7 +449,7 @@
             "value": 5,
             "unit": "kg"
           },
-          "recipe_item_id": "/ingredients/fermentable_additions/0"
+          "recipe_item_pointer": "/ingredients/fermentable_additions/0"
         },
         {
           "id": "entry_4",

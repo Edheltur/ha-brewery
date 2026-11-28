@@ -5,7 +5,7 @@
       "name": "balanced_amber",
       "title": "Янтарное сбалансированное",
       "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
-      "bjpc_styles": [],
+      "bjcp_styles": [],
       "ions": {
         "values": {
           "calcium": 80,
@@ -22,7 +22,7 @@
       "name": "balanced_amber_strong",
       "title": "Янтарное сбалансированное, повышенная минерализация",
       "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
-      "bjpc_styles": [],
+      "bjcp_styles": [],
       "ions": {
         "unit": "mg/l",
         "values": {
@@ -39,7 +39,7 @@
       "name": "pale_malty",
       "title": "Светлое солодовое",
       "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
-      "bjpc_styles": [],
+      "bjcp_styles": [],
       "ions": {
         "unit": "mg/l",
         "values": {
@@ -56,7 +56,7 @@
       "name": "pale_hoppy",
       "title": "Светлое охмелённое",
       "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
-      "bjpc_styles": [],
+      "bjcp_styles": [],
       "ions": {
         "unit": "mg/l",
         "values": {
@@ -73,7 +73,7 @@
       "name": "burton_historic",
       "title": "Бертон-апон-Трент, исторический",
       "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
-      "bjpc_styles": [],
+      "bjcp_styles": [],
       "ions": {
         "unit": "mg/l",
         "values": {
@@ -90,7 +90,7 @@
       "name": "burton_decarbonated",
       "title": "Бертон-апон-Трент, декарбонизированный",
       "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
-      "bjpc_styles": [],
+      "bjcp_styles": [],
       "ions": {
         "unit": "mg/l",
         "values": {
@@ -107,7 +107,7 @@
       "name": "dortmund_historic",
       "title": "Дортмунд, исторический",
       "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
-      "bjpc_styles": [
+      "bjcp_styles": [
         "5C"
       ],
       "ions": {
@@ -126,7 +126,7 @@
       "name": "dortmund_decarbonated",
       "title": "Дортмунд, декарбонизированный",
       "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
-      "bjpc_styles": [
+      "bjcp_styles": [
         "5C"
       ],
       "ions": {
@@ -145,7 +145,7 @@
       "name": "dublin",
       "title": "Дублин, сухой стаут",
       "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
-      "bjpc_styles": [
+      "bjcp_styles": [
         "15B"
       ],
       "ions": {
@@ -164,7 +164,7 @@
       "name": "edinburgh",
       "title": "Эдинбург, шотландский эль",
       "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
-      "bjpc_styles": [],
+      "bjcp_styles": [],
       "ions": {
         "unit": "mg/l",
         "values": {
@@ -181,7 +181,7 @@
       "name": "london",
       "title": "Лондон, портер",
       "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
-      "bjpc_styles": [
+      "bjcp_styles": [
         "13C"
       ],
       "ions": {
@@ -200,7 +200,7 @@
       "name": "munich",
       "title": "Мюнхен, тёмный лагер",
       "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
-      "bjpc_styles": [
+      "bjcp_styles": [
         "8A",
         "8B",
         "9A"
@@ -221,7 +221,7 @@
       "name": "munich_decarbonated",
       "title": "Мюнхен, декарбонизированный",
       "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
-      "bjpc_styles": [
+      "bjcp_styles": [
         "6A",
         "4C"
       ],
@@ -241,7 +241,7 @@
       "name": "pilsen",
       "title": "Пльзень, светлый лагер",
       "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
-      "bjpc_styles": [
+      "bjcp_styles": [
         "3B",
         "4A"
       ],
@@ -261,7 +261,7 @@
       "name": "dusseldorf",
       "title": "Дюссельдорф, альтбир",
       "source_url": "https://www.brewersfriend.com/brewing-water-target-profiles/",
-      "bjpc_styles": [
+      "bjcp_styles": [
         "7B"
       ],
       "ions": {
@@ -280,7 +280,7 @@
       "name": "spirit_of_the_west",
       "title": "Вестбаунд энд Даун — Дух Запада",
       "source_url": "https://www.beerandbrewing.com/recipe-westbound-down-spirit-of-the-west",
-      "bjpc_styles": [
+      "bjcp_styles": [
         "21A"
       ],
       "ions": {
@@ -296,7 +296,7 @@
       "name": "tropical_vibes",
       "title": "Свамп Хед — Тропическое настроение",
       "source_url": "https://www.beerandbrewing.com/recipe-swamp-head-tropical-vibes",
-      "bjpc_styles": [
+      "bjcp_styles": [
         "29A"
       ],
       "ions": {

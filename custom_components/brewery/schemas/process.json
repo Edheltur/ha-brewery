@@ -128,7 +128,7 @@
             {
               "name": "add_sparge_water",
               "type": "portioned_addition",
-              "target": "planned_sparge_volume",
+              "target": "sparge_water_volume",
               "portion": {
                 "value": 2,
                 "unit": "l"
