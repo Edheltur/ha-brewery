@@ -53,10 +53,10 @@
       },
       "description": "Записи в порядке принятия. Последовательность переходов определяет текущее состояние. Таймлайн сортируется по фактическому времени."
     },
-    "planned_date": {
+    "planned_at": {
       "type": "string",
-      "format": "date",
-      "description": "Назначенная пивоваром дата варочного дня."
+      "format": "date-time",
+      "description": "Запланированное пивоваром время начала варочного дня."
     },
     "started_at": {
       "type": "string",
@@ -69,7 +69,7 @@
     "id",
     "recipe_record_id",
     "journal",
-    "planned_date"
+    "planned_at"
   ],
   "additionalProperties": false,
   "$defs": {
@@ -539,7 +539,7 @@
         }
       ],
       "started_at": "2026-11-27T09:00:00+05:00",
-      "planned_date": "2026-11-27"
+      "planned_at": "2026-11-27T10:00:00+05:00"
     }
   ]
 }

@@ -84,9 +84,10 @@
             ],
             "additionalProperties": false
           },
-          "planned_date": {
+          "planned_at": {
             "type": "string",
-            "format": "date"
+            "format": "date-time",
+            "description": "Запланированное пивоваром время начала розлива."
           },
           "started_at": {
             "type": "string",
@@ -95,7 +96,7 @@
         },
         "required": [
           "id",
-          "planned_date"
+          "planned_at"
         ],
         "additionalProperties": false
       }
@@ -302,7 +303,7 @@
         "schema_version": 1,
         "id": "brew_1",
         "recipe_record_id": "cascade_smash",
-        "planned_date": "2026-12-05",
+        "planned_at": "2026-12-05T10:00:00+05:00",
         "journal": []
       },
       "clarifications": {
@@ -319,7 +320,7 @@
       "packagings": [
         {
           "id": "bottles",
-          "planned_date": "2026-12-26"
+          "planned_at": "2026-12-26T10:00:00+05:00"
         }
       ]
     }

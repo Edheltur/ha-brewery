@@ -28,3 +28,13 @@ class SchemaFormatsTest(unittest.TestCase):
         self.assertTrue(validator.is_valid(brew))
         brew["started_at"] = "yesterday"
         self.assertFalse(validator.is_valid(brew))
+
+    def test_planned_start_requires_time_and_offset(self):
+        validator = self.validators["batch.schema.json"]
+        for target in ("brew", "packaging"):
+            for value in ("2026-12-05", "2026-12-05T10:00:00"):
+                with self.subTest(target=target, value=value):
+                    batch = deepcopy(validator.schema["examples"][0])
+                    operation = batch["brew"] if target == "brew" else batch["packagings"][0]
+                    operation["planned_at"] = value
+                    self.assertFalse(validator.is_valid(batch))
