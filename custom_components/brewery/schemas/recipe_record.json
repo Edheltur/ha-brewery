@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Edheltur/ha-brewery/master/custom_components/brewery/schemas/recipe_record.json",
+  "description": "Запись каталога рецептов с одним рабочим черновиком и закреплёнными при старте варок редакциями.",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Стабильный идентификатор записи каталога, на который ссылается recipe_record_id варки."
+    },
+    "draft": {
+      "$ref": "#/$defs/content"
+    },
+    "revisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "content": {
+            "$ref": "#/$defs/content"
+          }
+        },
+        "required": [
+          "revision",
+          "content"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "id",
+    "draft",
+    "revisions"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "content": {
+      "type": "object",
+      "properties": {
+        "recipe": {
+          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/recipe.json#/$defs/RecipeType",
+          "description": "Рабочая рецептура BeerJSON. Повторный импорт заменяет только это поле черновика."
+        },
+        "target_ions": {
+          "type": "object",
+          "properties": {
+            "unit": {
+              "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/ConcentrationUnitType"
+            },
+            "values": {
+              "$ref": "ions.json"
+            }
+          },
+          "required": [
+            "unit",
+            "values"
+          ],
+          "additionalProperties": false,
+          "description": "Целевые концентрации в подготовленной заторной и промывной воде. Пивовар задаёт их по описанию автора, по шаблону профиля или вручную. Пропущенный ион не участвует в подборе, явный ноль задаёт цель 0."
+        }
+      },
+      "required": [
+        "recipe"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "examples": [
+    {
+      "schema_version": 1,
+      "id": "cascade_smash",
+      "draft": {
+        "recipe": {
+          "name": "Cascade SMaSH",
+          "type": "all grain",
+          "author": "Edheltur",
+          "batch_size": {
+            "value": 20,
+            "unit": "l"
+          },
+          "efficiency": {
+            "brewhouse": {
+              "value": 72,
+              "unit": "%"
+            }
+          },
+          "ingredients": {
+            "fermentable_additions": [
+              {
+                "name": "Pale Ale",
+                "type": "grain",
+                "amount": {
+                  "value": 4.5,
+                  "unit": "kg"
+                },
+                "yield": {
+                  "fine_grind": {
+                    "value": 80,
+                    "unit": "%"
+                  }
+                },
+                "color": {
+                  "value": 6,
+                  "unit": "EBC"
+                }
+              }
+            ]
+          }
+        },
+        "target_ions": {
+          "unit": "mg/l",
+          "values": {
+            "chloride": 50,
+            "sulfate": 120
+          }
+        }
+      },
+      "revisions": []
+    }
+  ]
+}

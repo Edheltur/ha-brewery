@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/Edheltur/ha-brewery/master/custom_components/brewery/schemas/salts.schema.json",
+  "$id": "https://raw.githubusercontent.com/Edheltur/ha-brewery/master/custom_components/brewery/schemas/salts.json",
   "type": "object",
   "properties": {
     "salts": {
@@ -9,7 +9,7 @@
         "type": "object",
         "properties": {
           "name": {
-            "$ref": "name.schema.json"
+            "$ref": "name.json"
           },
           "title": {
             "type": "string",
@@ -19,7 +19,7 @@
             "type": "string"
           },
           "base_salt_name": {
-            "$ref": "name.schema.json"
+            "$ref": "name.json"
           },
           "ions": {
             "description": "Масса каждого иона на одну единицу массы соли. null означает, что вклад этой формы неизвестен в модели водоподготовки.",
@@ -32,7 +32,7 @@
                     "description": "Миллиграммы иона на грамм соли."
                   },
                   "values": {
-                    "$ref": "ions.schema.json",
+                    "$ref": "ions.json",
                     "description": "Масса каждого иона в миллиграммах на грамм соли."
                   }
                 },

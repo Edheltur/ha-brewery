@@ -1,0 +1,375 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Edheltur/ha-brewery/master/custom_components/brewery/schemas/batch.json",
+  "description": "Партия от планирования варочного дня до дегустаций отдельных розливов. Пропуск scope означает всю партию.",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "brew": {
+      "$ref": "brew.json"
+    },
+    "clarifications": {
+      "type": "object",
+      "properties": {
+        "use_prechiller": {
+          "type": "boolean"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "packagings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope": {
+            "type": "object",
+            "properties": {
+              "transfer_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "transfer_ids"
+            ],
+            "additionalProperties": false
+          },
+          "planned_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Запланированное пивоваром время начала розлива."
+          },
+          "started_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "planned_at"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "carbonations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope": {
+            "$ref": "#/$defs/scope"
+          },
+          "method": {
+            "enum": [
+              "priming",
+              "forced"
+            ]
+          },
+          "started_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ended_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "method"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "conditioning": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope": {
+            "$ref": "#/$defs/scope"
+          },
+          "started_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ended_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "started_at"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "labelings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope": {
+            "$ref": "#/$defs/scope"
+          },
+          "occurred_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "photos": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true,
+            "description": "Стабильные локальные ссылки на фотографии."
+          }
+        },
+        "required": [
+          "id",
+          "occurred_at"
+        ],
+        "additionalProperties": false
+      },
+      "description": "Этикетирование партии или отдельного розлива."
+    },
+    "tastings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope": {
+            "$ref": "#/$defs/scope"
+          },
+          "occurred_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "questionnaire": {
+            "type": "string",
+            "minLength": 1
+          },
+          "answers": {
+            "type": "object",
+            "propertyNames": {
+              "$ref": "name.json"
+            },
+            "additionalProperties": {
+              "type": [
+                "string",
+                "number",
+                "boolean"
+              ]
+            }
+          },
+          "photos": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true,
+            "description": "Стабильные локальные ссылки на фотографии."
+          }
+        },
+        "required": [
+          "id",
+          "occurred_at",
+          "questionnaire",
+          "answers"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "water_plan": {
+      "type": "object",
+      "description": "План подготовки воды конкретной партии. При старте варки закрепляется вместе с редакцией рецепта.",
+      "properties": {
+        "mash_water_volume": {
+          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
+          "properties": {
+            "value": {
+              "minimum": 0
+            }
+          }
+        },
+        "sparge_water_volume": {
+          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
+          "properties": {
+            "value": {
+              "minimum": 0
+            }
+          }
+        },
+        "sparge_water_reserve_volume": {
+          "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
+          "properties": {
+            "value": {
+              "minimum": 0
+            }
+          }
+        },
+        "salt_additions": {
+          "type": "object",
+          "description": "Принятые навески по name формы из salts.json. Пустой объект означает принятую подготовку без солей. Поле отсутствует до принятия расчёта.",
+          "propertyNames": {
+            "$ref": "name.json"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "mash": {
+                "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/MassType",
+                "properties": {
+                  "value": {
+                    "exclusiveMinimum": 0
+                  }
+                }
+              },
+              "sparge": {
+                "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/MassType",
+                "properties": {
+                  "value": {
+                    "exclusiveMinimum": 0
+                  }
+                }
+              }
+            },
+            "minProperties": 1,
+            "additionalProperties": false,
+            "description": "Массы для заторной и подготовленной промывной воды соответственно. Указываются только положительные навески."
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "id",
+    "brew"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "scope": {
+      "type": "object",
+      "properties": {
+        "transfer_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "packaging_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "required": [
+            "transfer_ids"
+          ]
+        },
+        {
+          "required": [
+            "packaging_ids"
+          ]
+        }
+      ]
+    }
+  },
+  "examples": [
+    {
+      "schema_version": 1,
+      "id": "batch_1",
+      "brew": {
+        "schema_version": 1,
+        "id": "brew_1",
+        "recipe_record_id": "cascade_smash",
+        "planned_at": "2026-12-05T10:00:00+05:00",
+        "journal": []
+      },
+      "clarifications": {
+        "use_prechiller": true
+      },
+      "packagings": [
+        {
+          "id": "bottles",
+          "planned_at": "2026-12-26T10:00:00+05:00"
+        }
+      ],
+      "water_plan": {
+        "mash_water_volume": {
+          "value": 20,
+          "unit": "l"
+        },
+        "sparge_water_volume": {
+          "value": 9,
+          "unit": "l"
+        },
+        "sparge_water_reserve_volume": {
+          "value": 2,
+          "unit": "l"
+        },
+        "salt_additions": {
+          "calcium_chloride_dihydrate": {
+            "mash": {
+              "value": 4,
+              "unit": "g"
+            },
+            "sparge": {
+              "value": 2.2,
+              "unit": "g"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/Edheltur/ha-brewery/master/custom_components/brewery/schemas/process.schema.json",
+  "$id": "https://raw.githubusercontent.com/Edheltur/ha-brewery/master/custom_components/brewery/schemas/process.json",
   "type": "object",
   "properties": {
     "stages": {
@@ -9,7 +9,7 @@
         "type": "object",
         "properties": {
           "name": {
-            "$ref": "name.schema.json"
+            "$ref": "name.json"
           },
           "title": {
             "type": "string",
@@ -21,17 +21,17 @@
               "type": "object",
               "properties": {
                 "name": {
-                  "$ref": "name.schema.json"
+                  "$ref": "name.json"
                 },
                 "title": {
                   "type": "string",
                   "minLength": 1
                 },
                 "type": {
-                  "$ref": "name.schema.json"
+                  "$ref": "name.json"
                 },
                 "target": {
-                  "$ref": "name.schema.json"
+                  "$ref": "name.json"
                 },
                 "portion": {
                   "$ref": "https://raw.githubusercontent.com/beerjson/beerjson/main/json/measureable_units.json#/$defs/VolumeType",
@@ -77,14 +77,14 @@
               "type": "object",
               "properties": {
                 "action": {
-                  "$ref": "name.schema.json"
+                  "$ref": "name.json"
                 },
                 "title": {
                   "type": "string",
                   "minLength": 1
                 },
                 "to": {
-                  "$ref": "name.schema.json"
+                  "$ref": "name.json"
                 }
               },
               "required": [
@@ -109,7 +109,7 @@
       "description": "Идентификатор закрепляемой версии правил процесса."
     },
     "initial_stage": {
-      "$ref": "name.schema.json"
+      "$ref": "name.json"
     }
   },
   "required": [
@@ -128,7 +128,7 @@
             {
               "name": "add_sparge_water",
               "type": "portioned_addition",
-              "target": "planned_sparge_volume",
+              "target": "sparge_water_volume",
               "portion": {
                 "value": 2,
                 "unit": "l"

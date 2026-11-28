@@ -1,0 +1,14 @@
+{
+  "name": "ha-brewery",
+  "private": true,
+  "engines": {
+    "node": "26.x",
+    "npm": "11.x"
+  },
+  "scripts": {
+    "build": "python3 scripts/build.py"
+  },
+  "devDependencies": {
+    "@beerjson/beerjson": "git+https://github.com/beerjson/beerjson.git#main"
+  }
+}

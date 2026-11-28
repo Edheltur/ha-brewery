@@ -2,6 +2,7 @@
 
 import json
 import math
+import os
 from pathlib import Path
 import sys
 
@@ -11,13 +12,13 @@ from referencing import Registry, Resource
 from referencing.exceptions import Unresolvable
 
 ROOT = Path(__file__).resolve().parents[1]
-PACKAGE = ROOT / "custom_components" / "brewery"
+PACKAGE = Path(os.environ.get("BREWERY_PACKAGE_DIR", ROOT / "dist" / "brewery")).resolve()
 SCHEMAS = PACKAGE / "schemas"
 DATA = PACKAGE / "data"
 CATALOG_SCHEMAS = {
-    "bjcp-2021.json": "bjcp.schema.json",
-    "water_profiles.json": "water_profiles.schema.json",
-    "salts.json": "salts.schema.json",
+    "bjcp-2021.json": "bjcp.json",
+    "water_profiles.json": "water_profiles.json",
+    "salts.json": "salts.json",
 }
 
 
@@ -49,7 +50,7 @@ def read_json(path):
             parse_constant=finite_number,
         )
     except (OSError, ValueError) as error:
-        raise ValueError(f"{path.relative_to(ROOT)}: {error}") from error
+        raise ValueError(f"{path.relative_to(PACKAGE)}: {error}") from error
 
 
 def check_references(node, resolver, location):
@@ -72,8 +73,8 @@ def check_references(node, resolver, location):
 
 def load_validators():
     """Load Draft 2020-12 schemas without a network retrieval callback."""
-    paths = sorted(SCHEMAS.glob("*.schema.json"))
-    paths.append(SCHEMAS / "vendor" / "beerjson" / "measureable_units.json")
+    paths = sorted(SCHEMAS.glob("*.json"))
+    paths.extend(sorted((SCHEMAS / "vendor" / "beerjson").glob("*.json")))
     schemas = {path: read_json(path) for path in paths}
     registry = Registry()
     ids = set()
@@ -81,24 +82,24 @@ def load_validators():
         try:
             Draft202012Validator.check_schema(schema)
         except SchemaError as error:
-            location = f"{path.relative_to(ROOT)}: {error.json_path}"
+            location = f"{path.relative_to(PACKAGE)}: {error.json_path}"
             raise ValueError(f"{location}: {error.message}") from error
         schema_id = schema.get("$id") if isinstance(schema, dict) else None
         if not schema_id:
-            raise ValueError(f"{path.relative_to(ROOT)}: missing schema ID")
+            raise ValueError(f"{path.relative_to(PACKAGE)}: missing schema ID")
         if schema_id in ids:
-            raise ValueError(f"{path.relative_to(ROOT)}: duplicate schema ID {schema_id}")
+            raise ValueError(f"{path.relative_to(PACKAGE)}: duplicate schema ID {schema_id}")
         ids.add(schema_id)
         registry = registry.with_resource(schema_id, Resource.from_contents(schema))
     validators = {}
     for path, schema in schemas.items():
-        check_references(schema, registry.resolver(), str(path.relative_to(ROOT)))
-        validators[path.name] = Draft202012Validator(
+        check_references(schema, registry.resolver(), str(path.relative_to(PACKAGE)))
+        validators[path.relative_to(SCHEMAS).as_posix()] = Draft202012Validator(
             schema, registry=registry, format_checker=FormatChecker()
         )
     for schema_name in CATALOG_SCHEMAS.values():
         if schema_name not in validators:
-            raise ValueError(f"{SCHEMAS.relative_to(ROOT) / schema_name}: missing catalog schema")
+            raise ValueError(f"{SCHEMAS.relative_to(PACKAGE) / schema_name}: missing catalog schema")
     return validators
 
 
@@ -130,10 +131,10 @@ def check_catalog_links(catalogs):
             f"{profiles['bjcp_edition']} does not match catalog edition {bjcp['edition']}"
         )
     for index, profile in enumerate(profiles["profiles"]):
-        for code_index, code in enumerate(profile["bjpc_styles"]):
+        for code_index, code in enumerate(profile["bjcp_styles"]):
             if code not in codes:
                 yield (
-                    f"water_profiles.json: profiles[{index}].bjpc_styles[{code_index}]: "
+                    f"water_profiles.json: profiles[{index}].bjcp_styles[{code_index}]: "
                     f"unknown code {code!r} in BJCP {bjcp['edition']}"
                 )
 
