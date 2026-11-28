@@ -1,22 +1,53 @@
-name: Validate catalogs
+name: Build brewery
 
 on:
   pull_request:
   push:
-    branches:
-      - master
+    branches: [master]
+  workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  validate:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '26'
+          cache: npm
+      - run: npm install --global npm@11.19.1
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: '3.12'
+      - run: npm ci --ignore-scripts
+      - run: npm run build
+      - run: python -m zipfile -e dist/brewery.zip dist/brewery
       - run: python -m pip install -r requirements-dev.txt
       - run: python scripts/validate_catalogs.py
       - run: python -m unittest discover -s tests
+      - uses: actions/upload-artifact@v4
+        with:
+          name: brewery
+          path: dist/brewery.zip
+          if-no-files-found: error
+
+  release:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/master'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/download-artifact@v4
+        with:
+          name: brewery
+      - name: Publish HACS release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version=$(jq -er .version custom_components/brewery/manifest.json)
+          gh release create "v$version" brewery.zip --target "$GITHUB_SHA" --title "Brewery $version" --generate-notes
