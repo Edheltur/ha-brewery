@@ -15,7 +15,7 @@
     "recipe_id": {
       "type": "string",
       "minLength": 1,
-      "description": "Идентификатор рецепта, по которому создана варка."
+      "description": "Стабильный идентификатор записи каталога рецептов (recipe_record), выбранной для варки."
     },
     "recipe_revision": {
       "type": "integer",

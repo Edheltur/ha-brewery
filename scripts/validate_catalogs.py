@@ -73,7 +73,7 @@ def check_references(node, resolver, location):
 
 def load_validators():
     """Load Draft 2020-12 schemas without a network retrieval callback."""
-    paths = sorted(SCHEMAS.glob("*.schema.json"))
+    paths = sorted(SCHEMAS.glob("*.json"))
     paths.extend(sorted((SCHEMAS / "vendor" / "beerjson").glob("*.json")))
     schemas = {path: read_json(path) for path in paths}
     registry = Registry()
@@ -94,7 +94,7 @@ def load_validators():
     validators = {}
     for path, schema in schemas.items():
         check_references(schema, registry.resolver(), str(path.relative_to(PACKAGE)))
-        validators[path.name] = Draft202012Validator(
+        validators[path.relative_to(SCHEMAS).as_posix()] = Draft202012Validator(
             schema, registry=registry, format_checker=FormatChecker()
         )
     for schema_name in CATALOG_SCHEMAS.values():
